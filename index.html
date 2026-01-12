@@ -36,7 +36,6 @@
                 margin-top: 0.75rem;
                 text-align: left !important;
             }
-            .blank-row { display: none !important; } /* Hide blank visual rows on mobile cards for cleaner look */
         }
     </style>
 </head>
@@ -55,7 +54,7 @@
                 </div>
             </div>
             <div class="text-right hidden sm:block">
-                <span class="text-xs font-mono text-slate-500 bg-slate-100 px-3 py-1 rounded-full border border-slate-200">12 Jan 2026</span>
+                <span id="live-clock" class="text-xs font-mono text-slate-500 bg-slate-100 px-3 py-1 rounded-full border border-slate-200">12 Jan 2026</span>
             </div>
         </div>
     </nav>
@@ -84,6 +83,9 @@
             <button onclick="setFilter('Taxation')" class="filter-pill bg-white text-slate-600 border border-slate-200 px-3 py-1.5 md:px-4 rounded-lg text-[11px] md:text-xs font-bold hover:bg-slate-50 transition-all">Taxation</button>
             <button onclick="setFilter('Arbitration')" class="filter-pill bg-white text-slate-600 border border-slate-200 px-3 py-1.5 md:px-4 rounded-lg text-[11px] md:text-xs font-bold hover:bg-slate-50 transition-all">Arbitration</button>
             <button onclick="setFilter('Civil')" class="filter-pill bg-white text-slate-600 border border-slate-200 px-3 py-1.5 md:px-4 rounded-lg text-[11px] md:text-xs font-bold hover:bg-slate-50 transition-all">Civil</button>
+            <button onclick="setFilter('Public Employment')" class="filter-pill bg-white text-slate-600 border border-slate-200 px-3 py-1.5 md:px-4 rounded-lg text-[11px] md:text-xs font-bold hover:bg-slate-50 transition-all">Public Employment</button>
+            <button onclick="setFilter('Consumer')" class="filter-pill bg-white text-slate-600 border border-slate-200 px-3 py-1.5 md:px-4 rounded-lg text-[11px] md:text-xs font-bold hover:bg-slate-50 transition-all">Consumer</button>
+            <button onclick="setFilter('Corporate')" class="filter-pill bg-white text-slate-600 border border-slate-200 px-3 py-1.5 md:px-4 rounded-lg text-[11px] md:text-xs font-bold hover:bg-slate-50 transition-all">Corporate</button>
         </div>
 
         <!-- Results Table / Cards -->
@@ -119,7 +121,7 @@
             { id: 4, name: "Bhagheeratha Engineering Ltd vs State of Kerala", citation: "2026 INSC 4", cat: "Arbitration", link: "https://www.caseciter.com/bhagheeratha-engineering-ltd-vs-state-of-kerala-2026-insc-4-arbitration-act/" },
             { id: 5, name: "Motilal Oswal Financial Service Limited vs Santosh Cordeiro", citation: "2026 INSC 5", cat: "Arbitration", link: "https://www.caseciter.com/motilal-oswal-financial-service-limited-vs-santosh-cordeiro-2026-insc-5-arbitration-act/" },
             { id: 6, name: "Bhadra International (India) Pvt. Ltd. vs Airports Authority of India", citation: "2026 INSC 6", cat: "Commercial", link: "https://www.caseciter.com/bhadra-international-india-pvt-ltd-vs-airports-authority-of-india-2026-insc-6/" },
-            { id: 7, name: "Nirbhay Singh Suliya vs State of Madhya Pradesh", citation: "2026 INSC 7", cat: "Judiciary", link: "https://www.caseciter.com/nirbhay-singh-suliya-vs-state-of-madhya-pradesh-judiciary-disciplinary-proceedings-wrong-order/#gsc.tab=0" },
+            { id: 7, name: "Nirbhay Singh Suliya vs State of Madhya Pradesh", citation: "2026 INSC 7", cat: "Judiciary", link: "https://www.caseciter.com/nirbhay-singh-suliya-vs-state-of-madhya-phadesh-judiciary-disciplinary-proceedings-wrong-order/#gsc.tab=0" },
             { id: 8, name: "NAK Engineering Company Pvt. Ltd. v. Tarun Keshrichand Shah and Ors", citation: "2026 INSC 8", cat: "Civil", link: "https://www.caseciter.com/nak-engineering-company-pvt-ltd-v-tarun-keshrichand-shah-and-ors-2026-insc-8-cpc-dominus-litis-necessary-proper-party/" },
             { id: 9, name: "Panganti Vijaya v. United India Insurance Co. Ltd.", citation: "2026 INSC 9", cat: "Insurance", link: "https://www.caseciter.com/panganti-vijaya-v-united-india-insurance-co-ltd-2026-insc-9-workmans-compensation-act/" },
             { id: 10, name: "Dharmendra Sharma v. M. Arunmozhi & Anr.", citation: "2026 INSC 10", cat: "Contempt", link: "https://www.caseciter.com/dharmendra-sharma-v-m-arunmozhi-2026-insc-10-contempt/" },
@@ -129,7 +131,7 @@
             { id: 14, name: "UV ARC v. Electrosteel Castings", citation: "2026 INSC 14", cat: "IBC", link: "https://www.caseciter.com/uv-arc-v-electrosteel-castings-2026-insc-14-contract-act-see-to-it-guarantee/" },
             { id: 15, name: "Union of India v. G. Kiran", citation: "2026 INSC 15", cat: "Service", link: "https://www.caseciter.com/union-of-india-v-g-kiran-2026-insc-15-reservation-upsc-rules/" },
             { id: 16, name: "Kadirkhan Ahmedkhan Pathan v. MSWC", citation: "2026 INSC 16", cat: "Service", link: "https://www.caseciter.com/kadirkhan-ahmedkhan-pathan-v-maharashtra-state-warehousing-corporation-202/" },
-            { id: 18, name: "IFGL Refractories Ltd. v. Orissa State Financial Corp", citation: "2026 INSC 18", cat: "Arbitration", link: "https://www.caseciter.com/ifgl-refractories-ltd-v-orissa-state-financial-corporation-2026-insc-18-art-14-constitution-arbitrariness-promissory-estoppel-bureaucratic-lethargy/" },
+            { id: 18, name: "IFGL Refractories Ltd. v. Orissa State Financial Corp", citation: "2026 INSC 18", cat: "Arbitration", link: "https://www.caseciter.com/ifgl-refractories-ltd-v-orissa-state-financial-corporation-2026-insc-18-art-14-constitution-arbitrariness-promissory-estoppel-bureaucuratic-lethargy/" },
             { id: 19, name: "Commissioner of Customs (Import) v. Welkin Foods", citation: "2026 INSC 19", cat: "Taxation", link: "https://www.caseciter.com/commissioner-of-customs-import-v-welkin-foods-2026-insc-19-common-or-trade-parlance-test/" },
             { id: 20, name: "Guru Pada Bera v. Binod Kumar", citation: "2026 INSC 20", cat: "Civil", link: "https://www.caseciter.com/guru-pada-bera-vs-binod-kumar-2026-insc-20/#gsc.tab=0" },
             { id: 21, name: "Dalsukbhai Bachubhai Satasia v. State of Gujarat", citation: "2026 INSC 21", cat: "Criminal", link: "https://www.caseciter.com/dalsukbhai-bachubhai-satasia-v-state-of-gujarat-others-2026-insc-21-urban-land-ceiling-and-regulation-act/" },
@@ -158,7 +160,10 @@
             { id: 44, name: "X v. State of Uttar Pradesh & Another", citation: "2026 INSC 44", cat: "Criminal", link: "https://www.caseciter.com/x-v-state-of-uttar-pradesh-another-2026-insc-44/" },
             { id: 45, name: "Shrikrishna v. State of Madhya Pradesh", citation: "2026 INSC 45", cat: "Criminal", link: "https://www.caseciter.com/shrikrishna-v-state-of-madhya-pradesh-2026-insc-45-ipc-murder-culpable-homicide/" },
             { id: 46, name: "Jindal Equipment Leasing Consultancy Services Ltd v. CIT", citation: "2026 INSC 46", cat: "Taxation", link: "https://www.caseciter.com/indal-equipment-leasing-consultancy-services-ltd-v-commissioner-of-income-tax-delhi-ii-new-delhi-with-m-s-nalwa-investment-ltd-m-s-abhinandan-tradex-ltd-m-s-mansarover-tradex-ltd-neutra/" },
-            { id: 47, name: "State of Uttar Pradesh v. Anurudh", citation: "2026 INSC 47", cat: "Criminal", link: "https://www.caseciter.com/state-of-uttar-padesh-v-anurudh-2026-insc-47-pocso-bail-medical-age-determination/" }
+            { id: 47, name: "State of Uttar Pradesh v. Anurudh", citation: "2026 INSC 47", cat: "Criminal", link: "https://www.caseciter.com/state-of-uttar-propadesh-v-anurudh-2026-insc-47-pocso-bail-medical-age-determination/" },
+            { id: 49, name: "State of U.P. & another v. Dinesh Kumar", citation: "2026 INSC 49", cat: "Public Employment", link: "https://www.caseciter.com/state-of-u-p-another-v-dinesh-kumar-2026-insc-49/" },
+            { id: 50, name: "Ravi Shankar Bhushan v. Union of India", citation: "2026 INSC 50", cat: "", link: "https://www.caseciter.com/ravi-shankar-bhushan-v-union-of-india-2026-insc-50/#gsc.tab=0" },
+            { id: 51, name: "Ansal Crown Heights Flat Buyers Association v. Ansal Crown Infrabuild Pvt Ltd", citation: "2026 INSC 51", cat: "Consumer, Corporate", link: "https://www.caseciter.com/ansal-crown-heights-flat-buyers-association-v-ansal-crown-infrabuild-pvt-ltd-2026-insc-51-consumer-protection-act-companies-act-ibc/" }
         ];
 
         const searchInput = document.getElementById('search-input');
@@ -249,7 +254,7 @@
                 renderCases(cases);
                 searchInput.value = '';
             } else {
-                const filtered = cases.filter(c => c.cat === category);
+                const filtered = cases.filter(c => c.cat.includes(category));
                 renderCases(filtered);
                 searchInput.value = category;
             }
