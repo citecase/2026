@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Fully responsive legal search application with multi-select "AND" filtering -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CiteCase 2026 Search App</title>
@@ -15,7 +16,7 @@
         ::-webkit-scrollbar-track { background: #f1f1f1; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
         
-        /* Mobile Specific Card Styles */
+        /* Mobile Screen Card Styles */
         @media (max-width: 768px) {
             .responsive-table thead { display: none; }
             .responsive-table tr { 
@@ -54,7 +55,7 @@
                 </div>
             </div>
             <div class="text-right hidden sm:block">
-                <span id="live-clock" class="text-xs font-mono text-slate-500 bg-slate-100 px-3 py-1 rounded-full border border-slate-200">12 Jan 2026</span>
+                <span id="live-clock" class="text-xs font-mono text-slate-500 bg-slate-100 px-3 py-1 rounded-full border border-slate-200">13 Jan 2026</span>
             </div>
         </div>
     </nav>
@@ -62,7 +63,7 @@
     <!-- Search Section -->
     <main class="max-w-5xl mx-auto px-4 md:px-6">
         
-        <!-- Predictive Search -->
+        <!-- Search bar with predictive text -->
         <div class="relative group mb-6 md:mb-8">
             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                 <i class="fas fa-search text-slate-400 group-focus-within:text-indigo-500 transition-colors"></i>
@@ -70,25 +71,27 @@
             <input 
                 type="text" 
                 id="search-input" 
-                placeholder="Search by Case, INSC No, or Subject..." 
+                placeholder="Search by Case Name or INSC No..." 
                 class="block w-full pl-11 pr-4 py-3 md:py-4 bg-white border border-slate-200 rounded-2xl shadow-sm focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all text-base md:text-lg outline-none placeholder:text-slate-300"
             >
             <div id="stats" class="mt-3 text-[11px] md:text-xs text-slate-500 font-medium ml-2 text-indigo-600">Syncing citation database...</div>
         </div>
 
-        <!-- Filters -->
+        <!-- Filters (Multi-select "AND" logic) -->
         <div class="flex flex-wrap gap-2 mb-6 md:mb-8">
-            <button onclick="setFilter('')" class="filter-pill bg-indigo-600 text-white px-3 py-1.5 md:px-4 rounded-lg text-[11px] md:text-xs font-bold shadow-sm transition-all border border-indigo-600">All</button>
-            <button onclick="setFilter('Criminal')" class="filter-pill bg-white text-slate-600 border border-slate-200 px-3 py-1.5 md:px-4 rounded-lg text-[11px] md:text-xs font-bold hover:bg-slate-50 transition-all">Criminal</button>
-            <button onclick="setFilter('Taxation')" class="filter-pill bg-white text-slate-600 border border-slate-200 px-3 py-1.5 md:px-4 rounded-lg text-[11px] md:text-xs font-bold hover:bg-slate-50 transition-all">Taxation</button>
-            <button onclick="setFilter('Arbitration')" class="filter-pill bg-white text-slate-600 border border-slate-200 px-3 py-1.5 md:px-4 rounded-lg text-[11px] md:text-xs font-bold hover:bg-slate-50 transition-all">Arbitration</button>
-            <button onclick="setFilter('Civil')" class="filter-pill bg-white text-slate-600 border border-slate-200 px-3 py-1.5 md:px-4 rounded-lg text-[11px] md:text-xs font-bold hover:bg-slate-50 transition-all">Civil</button>
-            <button onclick="setFilter('Public Employment')" class="filter-pill bg-white text-slate-600 border border-slate-200 px-3 py-1.5 md:px-4 rounded-lg text-[11px] md:text-xs font-bold hover:bg-slate-50 transition-all">Public Employment</button>
-            <button onclick="setFilter('Consumer')" class="filter-pill bg-white text-slate-600 border border-slate-200 px-3 py-1.5 md:px-4 rounded-lg text-[11px] md:text-xs font-bold hover:bg-slate-50 transition-all">Consumer</button>
-            <button onclick="setFilter('Corporate')" class="filter-pill bg-white text-slate-600 border border-slate-200 px-3 py-1.5 md:px-4 rounded-lg text-[11px] md:text-xs font-bold hover:bg-slate-50 transition-all">Corporate</button>
+            <button id="filter-all" onclick="clearFilters()" class="filter-pill bg-indigo-600 text-white px-3 py-1.5 md:px-4 rounded-lg text-[11px] md:text-xs font-bold shadow-sm transition-all border border-indigo-600">All</button>
+            <button onclick="toggleFilter('Important')" class="filter-pill bg-white text-rose-600 border border-rose-200 px-3 py-1.5 md:px-4 rounded-lg text-[11px] md:text-xs font-bold hover:bg-rose-50 transition-all"><i class="fas fa-star mr-1"></i>Important</button>
+            <button onclick="toggleFilter('Criminal')" class="filter-pill bg-white text-slate-600 border border-slate-200 px-3 py-1.5 md:px-4 rounded-lg text-[11px] md:text-xs font-bold hover:bg-slate-50 transition-all">Criminal</button>
+            <button onclick="toggleFilter('Taxation')" class="filter-pill bg-white text-slate-600 border border-slate-200 px-3 py-1.5 md:px-4 rounded-lg text-[11px] md:text-xs font-bold hover:bg-slate-50 transition-all">Taxation</button>
+            <button onclick="toggleFilter('Arbitration')" class="filter-pill bg-white text-slate-600 border border-slate-200 px-3 py-1.5 md:px-4 rounded-lg text-[11px] md:text-xs font-bold hover:bg-slate-50 transition-all">Arbitration</button>
+            <button onclick="toggleFilter('Civil')" class="filter-pill bg-white text-slate-600 border border-slate-200 px-3 py-1.5 md:px-4 rounded-lg text-[11px] md:text-xs font-bold hover:bg-slate-50 transition-all">Civil</button>
+            <button onclick="toggleFilter('Public Employment')" class="filter-pill bg-white text-slate-600 border border-slate-200 px-3 py-1.5 md:px-4 rounded-lg text-[11px] md:text-xs font-bold hover:bg-slate-50 transition-all">Public Employment</button>
+            <button onclick="toggleFilter('Consumer')" class="filter-pill bg-white text-slate-600 border border-slate-200 px-3 py-1.5 md:px-4 rounded-lg text-[11px] md:text-xs font-bold hover:bg-slate-50 transition-all">Consumer</button>
+            <button onclick="toggleFilter('Corporate')" class="filter-pill bg-white text-slate-600 border border-slate-200 px-3 py-1.5 md:px-4 rounded-lg text-[11px] md:text-xs font-bold hover:bg-slate-50 transition-all">Corporate</button>
+            <button onclick="toggleFilter('MACT')" class="filter-pill bg-white text-slate-600 border border-slate-200 px-3 py-1.5 md:px-4 rounded-lg text-[11px] md:text-xs font-bold hover:bg-slate-50 transition-all">MACT</button>
         </div>
 
-        <!-- Results Table / Cards -->
+        <!-- Results Table -->
         <div class="md:bg-white md:rounded-2xl md:shadow-xl md:shadow-slate-200/50 md:border md:border-slate-200 md:overflow-hidden">
             <div class="overflow-x-auto">
                 <table class="w-full text-left responsive-table">
@@ -96,7 +99,6 @@
                         <tr>
                             <th class="px-6 py-4 text-[11px] font-bold text-slate-400 uppercase tracking-widest">Citation</th>
                             <th class="px-6 py-4 text-[11px] font-bold text-slate-400 uppercase tracking-widest">Case Name</th>
-                            <th class="px-6 py-4 text-[11px] font-bold text-slate-400 uppercase tracking-widest">Subject</th>
                             <th class="px-6 py-4 text-[11px] font-bold text-slate-400 uppercase tracking-widest text-right">Link</th>
                         </tr>
                     </thead>
@@ -109,17 +111,17 @@
 
         <div id="empty-state" class="hidden flex flex-col items-center justify-center py-20 text-slate-400">
             <i class="fas fa-folder-open text-5xl mb-4 opacity-10"></i>
-            <p class="text-sm font-medium">No records found for that query.</p>
+            <p class="text-sm font-medium">No records found matching all selected criteria.</p>
         </div>
     </main>
 
     <script>
         const cases = [
             { id: 1, name: "Adani Power Ltd. vs Union of India", citation: "2026 INSC 1", cat: "Taxation", link: "https://www.caseciter.com/adani-power-ltd-vs-union-of-india-2026-insc-1-precedent-delegated-legislation-tax-levy/" },
-            { id: 2, name: "Gulfisha Fatima vs State (Govt. of NCT of Delhi)", citation: "2026 INSC 2", cat: "Criminal", link: "https://www.caseciter.com/gulfisha-fatima-vs-state-govt-of-nct-of-delhi-2025-insc-1-delhi-riots-cases/#gsc.tab=0" },
-            { id: 3, name: "Anjani Singh v. State of Uttar Pradesh", citation: "2026 INSC 3", cat: "Criminal", link: "https://www.caseciter.com/anjani-singh-v-state-of-uttar-pradesh-2026-insc-3-ipc-murder-case-acquittal/#gsc.tab=0" },
-            { id: 4, name: "Bhagheeratha Engineering Ltd vs State of Kerala", citation: "2026 INSC 4", cat: "Arbitration", link: "https://www.caseciter.com/bhagheeratha-engineering-ltd-vs-state-of-kerala-2026-insc-4-arbitration-act/" },
-            { id: 5, name: "Motilal Oswal Financial Service Limited vs Santosh Cordeiro", citation: "2026 INSC 5", cat: "Arbitration", link: "https://www.caseciter.com/motilal-oswal-financial-service-limited-vs-santosh-cordeiro-2026-insc-5-arbitration-act/" },
+            { id: 2, name: "Gulfisha Fatima vs State (Govt. of NCT of Delhi)", citation: "2026 INSC 2", cat: "Criminal, Important", link: "https://www.caseciter.com/gulfisha-fatima-vs-state-govt-of-nct-of-delhi-2025-insc-1-delhi-riots-cases/#gsc.tab=0" },
+            { id: 3, name: "Anjani Singh v. State of Uttar Pradesh", citation: "2026 INSC 3", cat: "Criminal, Important", link: "https://www.caseciter.com/anjani-singh-v-state-of-uttar-pradesh-2026-insc-3-ipc-murder-case-acquittal/#gsc.tab=0" },
+            { id: 4, name: "Bhagheeratha Engineering Ltd vs State of Kerala", citation: "2026 INSC 4", cat: "Arbitration, Important", link: "https://www.caseciter.com/bhagheeratha-engineering-ltd-vs-state-of-kerala-2026-insc-4-arbitration-act/" },
+            { id: 5, name: "Motilal Oswal Financial Service Limited vs Santosh Cordeiro", citation: "2026 INSC 5", cat: "Arbitration, Important", link: "https://www.caseciter.com/motilal-oswal-financial-service-limited-vs-santosh-cordeiro-2026-insc-5-arbitration-act/" },
             { id: 6, name: "Bhadra International (India) Pvt. Ltd. vs Airports Authority of India", citation: "2026 INSC 6", cat: "Commercial", link: "https://www.caseciter.com/bhadra-international-india-pvt-ltd-vs-airports-authority-of-india-2026-insc-6/" },
             { id: 7, name: "Nirbhay Singh Suliya vs State of Madhya Pradesh", citation: "2026 INSC 7", cat: "Judiciary", link: "https://www.caseciter.com/nirbhay-singh-suliya-vs-state-of-madhya-phadesh-judiciary-disciplinary-proceedings-wrong-order/#gsc.tab=0" },
             { id: 8, name: "NAK Engineering Company Pvt. Ltd. v. Tarun Keshrichand Shah and Ors", citation: "2026 INSC 8", cat: "Civil", link: "https://www.caseciter.com/nak-engineering-company-pvt-ltd-v-tarun-keshrichand-shah-and-ors-2026-insc-8-cpc-dominus-litis-necessary-proper-party/" },
@@ -128,10 +130,11 @@
             { id: 11, name: "Subhash Aggarwal v. Mahender Pal Chhabra", citation: "2026 INSC 11", cat: "Civil", link: "https://www.caseciter.com/subhash-aggarwal-v-mahender-pal-chhabra-2026-insc-11-specific-relief-act-equity/" },
             { id: 12, name: "Arvind Dham v. Directorate of Enforcement", citation: "2026 INSC 12", cat: "PMLA", link: "https://www.caseciter.com/arvind-dham-v-directorate-of-enforcement-2026-insc-12-c/" },
             { id: 13, name: "Pratima Das v. State of Himachal Pradesh", citation: "2026 INSC 13", cat: "Criminal", link: "https://www.caseciter.com/pratima-das-v-state-of-himachal-pradesh-2026-insc-13/#gsc.tab=0" },
-            { id: 14, name: "UV ARC v. Electrosteel Castings", citation: "2026 INSC 14", cat: "IBC", link: "https://www.caseciter.com/uv-arc-v-electrosteel-castings-2026-insc-14-contract-act-see-to-it-guarantee/" },
+            { id: 14, name: "UV ARC v. Electrosteel Castings", citation: "2026 INSC 14", cat: "IBC, Important", link: "https://www.caseciter.com/uv-arc-v-electrosteel-castings-2026-insc-14-contract-act-see-to-it-guarantee/" },
             { id: 15, name: "Union of India v. G. Kiran", citation: "2026 INSC 15", cat: "Service", link: "https://www.caseciter.com/union-of-india-v-g-kiran-2026-insc-15-reservation-upsc-rules/" },
             { id: 16, name: "Kadirkhan Ahmedkhan Pathan v. MSWC", citation: "2026 INSC 16", cat: "Service", link: "https://www.caseciter.com/kadirkhan-ahmedkhan-pathan-v-maharashtra-state-warehousing-corporation-202/" },
-            { id: 18, name: "IFGL Refractories Ltd. v. Orissa State Financial Corp", citation: "2026 INSC 18", cat: "Arbitration", link: "https://www.caseciter.com/ifgl-refractories-ltd-v-orissa-state-financial-corporation-2026-insc-18-art-14-constitution-arbitrariness-promissory-estoppel-bureaucuratic-lethargy/" },
+            { id: 17, name: "UV ARC v. Electrosteel Castings", citation: "2026 INSC 17", cat: "IBC", link: "https://www.caseciter.com/uv-arc-v-electrosteel-castings-2026-insc-14-contract-act-see-to-it-guarantee/" },
+            { id: 18, name: "IFGL Refractories Ltd. v. Orissa State Financial Corp", citation: "2026 INSC 18", cat: "Arbitration", link: "https://www.caseciter.com/ifgl-refractories-ltd-v-orissa-state-financial-corporation-2026-insc-18-art-14-constitution-arbitrariness-promissory-estoppel-bureaucratic-lethargy/" },
             { id: 19, name: "Commissioner of Customs (Import) v. Welkin Foods", citation: "2026 INSC 19", cat: "Taxation", link: "https://www.caseciter.com/commissioner-of-customs-import-v-welkin-foods-2026-insc-19-common-or-trade-parlance-test/" },
             { id: 20, name: "Guru Pada Bera v. Binod Kumar", citation: "2026 INSC 20", cat: "Civil", link: "https://www.caseciter.com/guru-pada-bera-vs-binod-kumar-2026-insc-20/#gsc.tab=0" },
             { id: 21, name: "Dalsukbhai Bachubhai Satasia v. State of Gujarat", citation: "2026 INSC 21", cat: "Criminal", link: "https://www.caseciter.com/dalsukbhai-bachubhai-satasia-v-state-of-gujarat-others-2026-insc-21-urban-land-ceiling-and-regulation-act/" },
@@ -141,13 +144,13 @@
             { id: 25, name: "State (NCT of Delhi) v. Khimji Bhai Jadeja", citation: "2026 INSC 25", cat: "Criminal", link: "https://www.caseciter.com/state-nct-of-delhi-v-khimji-bhai-jadeja-2026-insc-25-crpc-bnss-triple-tests-same-transaction-consolidation-of-firs/" },
             { id: 26, name: "Divjot Sekhon v. State of Punjab and Others", citation: "2026 INSC 26", cat: "Civil", link: "https://www.caseciter.com/divjot-sekhon-v-state-of-punjab-and-others-2026-insc-26-mbbs-admission-policy-decision-judicial-review/" },
             { id: 27, name: "S. Nagesh v. Shobha S. Aradhya", citation: "2026 INSC 27", cat: "Civil", link: "https://www.caseciter.com/s-nagesh-v-shobha-s-aradhya-2026-insc-27-ni-act-delay-condonation-taking-cognizance/" },
-            { id: 28, name: "", citation: "2026 INSC 28", cat: "", link: "#" },
-            { id: 29, name: "", citation: "2026 INSC 29", cat: "", link: "#" },
-            { id: 30, name: "", citation: "2026 INSC 30", cat: "", link: "#" },
+            { id: 28, name: "Shalini Bhateja vs State of U.P.", citation: "2026 INSC 28", cat: "Criminal", link: "https://www.caseciter.com/shalini-bhateja-vs-state-of-u-p-2026-insc-28/" },
+            { id: 29, name: "S. Shakul Hameed v. Tamil Nadu State Transport Corporation Ltd", citation: "2026 INSC 29", cat: "MACT", link: "https://www.caseciter.com/s-shakul-hameed-v-tamil-nadu-state-transport-corporation-ltd-2026-insc-29-motor-accident-compensation/" },
+            { id: 30, name: "Prasanna Kasini v. State of Telangana & Anr.", citation: "2026 INSC 30", cat: "Criminal", link: "https://www.caseciter.com/prasanna-kasini-v-state-of-telangana-anr-2026-insc-30/" },
             { id: 31, name: "Karnataka Lokayuktha Bagalkote v. Chandrashekar", citation: "2026 INSC 31", cat: "Criminal", link: "https://www.caseciter.com/karnataka-lokayuktha-bagalkote-district-bagalkot-vs-chandrashekar-2026-insc-31-criminal-case-disciplinary-proceedings/" },
-            { id: 32, name: "Regenta Hotels Private Limited v. Hotel Grand Centre Point", citation: "2026 INSC 32", cat: "Arbitration", link: "https://www.caseciter.com/regenta-hotels-private-limited-v-hotel-grand-centre-point-2026-insc-32-ss-9-21-arbitration-act/" },
-            { id: 33, name: "The Property Company (P) Ltd. v. Rohinten Daddy Mazda", citation: "2026 INSC 33", cat: "Civil", link: "https://www.caseciter.com/the-property-company-p-ltd-v-rohinten-daddy-mazda-neutral-citation-2026-insc-33/" },
-            { id: 34, name: "Jan De Nul Dredging India v. Tuticorin Port Trust", citation: "2026 INSC 34", cat: "Arbitration", link: "https://www.caseciter.com/jan-de-nul-dredging-india-pvt-ltd-v-tuticorin-port-trust-2026-insc-34-ss-34-37-arbitration-act/" },
+            { id: 32, name: "Regenta Hotels Private Limited v. Hotel Grand Centre Point", citation: "2026 INSC 32", cat: "Arbitration, Important", link: "https://www.caseciter.com/regenta-hotels-private-limited-v-hotel-grand-centre-point-2026-insc-32-ss-9-21-arbitration-act/" },
+            { id: 33, name: "The Property Company (P) Ltd. v. Rohinten Daddy Mazda", citation: "2026 INSC 33", cat: "Civil, Important", link: "https://www.caseciter.com/the-property-company-p-ltd-v-rohinten-daddy-mazda-neutral-citation-2026-insc-33/" },
+            { id: 34, name: "Jan De Nul Dredging India v. Tuticorin Port Trust", citation: "2026 INSC 34", cat: "Arbitration, Important", link: "https://www.caseciter.com/jan-de-nul-dredging-india-pvt-ltd-v-tuticorin-port-trust-2026-insc-34-ss-34-37-arbitration-act/" },
             { id: 35, name: "Muslimveetil Chalakkal Ahammed Haji v. Sakeena Beevi", citation: "2026 INSC 35", cat: "Civil", link: "https://www.caseciter.com/muslimveetil-chalakkal-ahammed-haji-v-sakeena-beevi-neutral-citation-2026-insc-35/" },
             { id: 36, name: "Md Imran @ D.C. Guddu v. State of Jharkhand", citation: "2026 INSC 36", cat: "Criminal", link: "https://www.caseciter.com/md-imran-d-c-guddu-v-state-of-jharkhand-2026-insc-36-s-319-crpc-bail-tests/" },
             { id: 37, name: "Joint Director (ACB) A.P. v. Dayam Peda Ranga Rao", citation: "2026 INSC 37", cat: "Criminal", link: "https://www.caseciter.com/joint-director-rayalaseema-acb-a-p-v-dayam-peda-ranga-rao-2026-insc-37-crpc/" },
@@ -161,11 +164,13 @@
             { id: 45, name: "Shrikrishna v. State of Madhya Pradesh", citation: "2026 INSC 45", cat: "Criminal", link: "https://www.caseciter.com/shrikrishna-v-state-of-madhya-pradesh-2026-insc-45-ipc-murder-culpable-homicide/" },
             { id: 46, name: "Jindal Equipment Leasing Consultancy Services Ltd v. CIT", citation: "2026 INSC 46", cat: "Taxation", link: "https://www.caseciter.com/indal-equipment-leasing-consultancy-services-ltd-v-commissioner-of-income-tax-delhi-ii-new-delhi-with-m-s-nalwa-investment-ltd-m-s-abhinandan-tradex-ltd-m-s-mansarover-tradex-ltd-neutra/" },
             { id: 47, name: "State of Uttar Pradesh v. Anurudh", citation: "2026 INSC 47", cat: "Criminal", link: "https://www.caseciter.com/state-of-uttar-propadesh-v-anurudh-2026-insc-47-pocso-bail-medical-age-determination/" },
+            { id: 48, name: "Kishorilal (D) v. Gopal", citation: "2026 INSC 48", cat: "Civil", link: "https://www.caseciter.com/kishorilal-d-v-gopal-2026-insc-48-cpc-abatement-specific-performance-suit-res-judicata-lis-pendens/" },
             { id: 49, name: "State of U.P. & another v. Dinesh Kumar", citation: "2026 INSC 49", cat: "Public Employment", link: "https://www.caseciter.com/state-of-u-p-another-v-dinesh-kumar-2026-insc-49/" },
-            { id: 50, name: "Ravi Shankar Bhushan v. Union of India", citation: "2026 INSC 50", cat: "", link: "https://www.caseciter.com/ravi-shankar-bhushan-v-union-of-india-2026-insc-50/#gsc.tab=0" },
-            { id: 51, name: "Ansal Crown Heights Flat Buyers Association v. Ansal Crown Infrabuild Pvt Ltd", citation: "2026 INSC 51", cat: "Consumer, Corporate", link: "https://www.caseciter.com/ansal-crown-heights-flat-buyers-association-v-ansal-crown-infrabuild-pvt-ltd-2026-insc-51-consumer-protection-act-companies-act-ibc/" }
+            { id: 50, name: "Ravi Shankar Bhushan v. Union of India", citation: "2026 INSC 50", cat: "Criminal", link: "https://www.caseciter.com/ravi-shankar-bhushan-v-union-of-india-2026-insc-50/#gsc.tab=0" },
+            { id: 51, name: "Ansal Crown Heights Flat Buyers Association v. Ansal Crown Infrabuild Pvt Ltd", citation: "2026 INSC 51", cat: "Consumer, Corporate, Important", link: "https://www.caseciter.com/ansal-crown-heights-flat-buyers-association-v-ansal-crown-infrabuild-pvt-ltd-2026-insc-51-consumer-protection-act-companies-act-ibc/" }
         ];
 
+        let activeFilters = [];
         const searchInput = document.getElementById('search-input');
         const resultsTable = document.getElementById('case-results');
         const emptyState = document.getElementById('empty-state');
@@ -182,21 +187,21 @@
             
             if (filteredCases.length === 0) {
                 emptyState.classList.remove('hidden');
-                stats.innerText = `0 matches for "${query}"`;
+                stats.innerText = `No results found for current selection.`;
                 return;
             }
 
             emptyState.classList.add('hidden');
             stats.innerText = `${filteredCases.length} records available in 2026 Catalog.`;
 
-            // Sort by Citation/ID in DESCENDING order
+            // Sort by ID in DESCENDING order
             filteredCases.sort((a,b) => b.id - a.id).forEach(c => {
                 const isBlank = !c.name;
                 const row = document.createElement('tr');
-                row.className = isBlank ? 'blank-row group md:table-row' : 'hover:bg-indigo-50/40 transition-all group md:table-row';
+                row.className = isBlank ? 'bg-slate-50 group md:table-row' : 'hover:bg-indigo-50/40 transition-all group md:table-row';
                 
                 const caseNameDisplay = isBlank 
-                    ? `<span class="italic text-slate-400 font-medium">Will Be Updated Shortly</span>` 
+                    ? `<span class="italic text-slate-400 font-medium text-xs">Will Be Updated Shortly</span>` 
                     : highlightText(c.name, query);
 
                 const citationHTML = `
@@ -209,58 +214,87 @@
 
                 const nameHTML = `
                     <td class="px-0 md:px-6 md:py-5">
-                        <div class="text-sm md:text-[15px] font-bold text-slate-800 leading-tight">${caseNameDisplay}</div>
-                    </td>
-                `;
-
-                const subjectHTML = `
-                    <td class="px-0 md:px-6 md:py-5 whitespace-nowrap">
-                        <span class="text-[11px] md:text-xs text-slate-600 font-bold">${highlightText(c.cat || (isBlank ? '' : '-'), query)}</span>
+                        <div class="text-sm md:text-[15px] font-bold text-slate-800 leading-tight">
+                            ${c.cat && c.cat.includes('Important') ? '<i class="fas fa-star text-rose-500 mr-1.5 text-xs"></i>' : ''}${caseNameDisplay}
+                        </div>
+                        ${!isBlank && c.cat ? `<div class="md:hidden text-[10px] text-slate-400 font-bold mt-1 uppercase tracking-tight">${c.cat}</div>` : ''}
                     </td>
                 `;
 
                 const actionHTML = `
                     <td class="px-0 md:px-6 md:py-5 whitespace-nowrap md:text-right">
-                        ${!isBlank ? `<a href="${c.link}" target="_blank" class="inline-flex items-center justify-center w-full md:w-auto px-4 py-2 bg-indigo-600 text-[11px] font-bold rounded-xl text-white hover:bg-indigo-700 transition-all shadow-md shadow-indigo-100">VIEW POST</a>` : ''}
+                        ${!isBlank ? `<a href="${c.link}" target="_blank" class="inline-flex items-center justify-center w-full md:w-auto px-4 py-2 bg-indigo-600 text-[11px] font-bold rounded-xl text-white hover:bg-indigo-700 transition-all shadow-md shadow-indigo-100 uppercase tracking-wide">READ NOTES</a>` : ''}
                     </td>
                 `;
 
-                row.innerHTML = citationHTML + nameHTML + subjectHTML + actionHTML;
+                row.innerHTML = citationHTML + nameHTML + actionHTML;
                 resultsTable.appendChild(row);
             });
         }
 
-        function handleSearch() {
+        function handleFilter() {
             const query = searchInput.value.toLowerCase().trim();
-            const filtered = cases.filter(c => 
-                (c.name && c.name.toLowerCase().includes(query)) || 
-                c.citation.toLowerCase().includes(query) || 
-                (c.cat && c.cat.toLowerCase().includes(query))
-            );
+            const filtered = cases.filter(c => {
+                const matchesSearch = !query || (c.name && c.name.toLowerCase().includes(query)) || c.citation.toLowerCase().includes(query);
+                // "AND" Logic for Categories: Judgment must contain EVERY active filter tag in its cat string
+                const matchesCategory = activeFilters.length === 0 || (c.cat && activeFilters.every(f => c.cat.includes(f)));
+                return matchesSearch && matchesCategory;
+            });
             renderCases(filtered, query);
         }
 
-        function setFilter(category) {
-            const pills = document.querySelectorAll('.filter-pill');
-            pills.forEach(p => {
-                const isSelected = p.innerText === (category || 'All');
-                p.classList.toggle('bg-indigo-600', isSelected);
-                p.classList.toggle('text-white', isSelected);
-                p.classList.toggle('bg-white', !isSelected);
-                p.classList.toggle('text-slate-600', !isSelected);
-            });
-
-            if(!category) {
-                renderCases(cases);
-                searchInput.value = '';
+        function toggleFilter(category) {
+            const index = activeFilters.indexOf(category);
+            if (index > -1) {
+                activeFilters.splice(index, 1);
             } else {
-                const filtered = cases.filter(c => c.cat.includes(category));
-                renderCases(filtered);
-                searchInput.value = category;
+                activeFilters.push(category);
             }
+            updatePillStyles();
+            handleFilter();
         }
 
-        searchInput.addEventListener('input', handleSearch);
+        function clearFilters() {
+            activeFilters = [];
+            updatePillStyles();
+            handleFilter();
+        }
+
+        function updatePillStyles() {
+            const pills = document.querySelectorAll('.filter-pill');
+            const allPill = document.getElementById('filter-all');
+            
+            pills.forEach(p => {
+                const onclickAttr = p.getAttribute('onclick');
+                if (!onclickAttr) return;
+                const match = onclickAttr.match(/'([^']+)'/);
+                if (!match) return;
+                
+                const cat = match[1];
+                const isSelected = activeFilters.includes(cat);
+                
+                if (cat === 'Important') {
+                    p.classList.toggle('bg-rose-600', isSelected);
+                    p.classList.toggle('text-white', isSelected);
+                    p.classList.toggle('bg-white', !isSelected);
+                    p.classList.toggle('text-rose-600', !isSelected);
+                } else {
+                    p.classList.toggle('bg-indigo-600', isSelected);
+                    p.classList.toggle('text-white', isSelected);
+                    p.classList.toggle('bg-white', !isSelected);
+                    p.classList.toggle('text-slate-600', !isSelected);
+                }
+            });
+
+            // Special logic for "All" button
+            const isAll = activeFilters.length === 0;
+            allPill.classList.toggle('bg-indigo-600', isAll);
+            allPill.classList.toggle('text-white', isAll);
+            allPill.classList.toggle('bg-white', !isAll);
+            allPill.classList.toggle('text-slate-600', !isAll);
+        }
+
+        searchInput.addEventListener('input', handleFilter);
         window.onload = () => renderCases(cases);
     </script>
 </body>
