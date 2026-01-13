@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Fully responsive legal search application with prioritized tags, tiered sorting, and expansion lock -->
+    <!-- Fully responsive legal search application with Georgia font and simplified UI -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CiteCase 2026 Search App</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        body { font-family: Georgia, 'Times New Roman', Times, serif; background-color: #f8fafc; }
         .glass-header { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(12px); }
         .highlight { background-color: #fef08a; font-weight: 600; padding: 0 2px; border-radius: 2px; color: #854d0e; }
         ::-webkit-scrollbar { width: 8px; }
@@ -102,7 +101,6 @@
         <!-- Dynamic Filters Container -->
         <div id="filter-container" class="flex flex-wrap gap-2 mb-6 md:mb-8">
             <button id="filter-all" onclick="clearFilters()" class="filter-pill bg-indigo-600 text-white px-3 py-1.5 md:px-4 rounded-lg text-[11px] md:text-xs font-bold shadow-sm transition-all border border-indigo-600">All</button>
-            <!-- Important and other tags will be injected here -->
         </div>
 
         <!-- Results Table -->
@@ -171,6 +169,8 @@
 
     <script>
         const cases = [
+            { id: 52, name: "Alka Shrirang Chavan v. Hemchandra Rajaram Bhonsale", citation: "2026 INSC 52", cat: "Civil, Transfer of Property Act, Specific Relief Act, Limitation, Important", link: "https://www.caseciter.com/alka-shrirang-chavan-v-hemchandra-rajaram-bhonsale-2026-insc-52-specific-relief-act-transfer-of-property-act-lis-pendens/" },
+            { id: 51, name: "Ansal Crown Heights Flat Buyers Association v. Ansal Crown Infrabuild Pvt Ltd", citation: "2026 INSC 51", cat: "Consumer, Corporate, Important", link: "https://www.caseciter.com/ansal-crown-heights-flat-buyers-association-v-ansal-crown-infrabuild-pvt-ltd-2026-insc-51-consumer-protection-act-companies-act-ibc/" },
             { id: 1, name: "Adani Power Ltd. vs Union of India", citation: "2026 INSC 1", cat: "Taxation", link: "https://www.caseciter.com/adani-power-ltd-vs-union-of-india-2026-insc-1-precedent-delegated-legislation-tax-levy/" },
             { id: 2, name: "Gulfisha Fatima vs State", citation: "2026 INSC 2", cat: "Criminal, Important", link: "https://www.caseciter.com/gulfisha-fatima-vs-state-govt-of-nct-of-delhi-2025-insc-1-delhi-riots-cases/#gsc.tab=0" },
             { id: 3, name: "Anjani Singh v. State of Uttar Pradesh", citation: "2026 INSC 3", cat: "Criminal, Important", link: "https://www.caseciter.com/anjani-singh-v-state-of-the-uttar-pradesh-2026-insc-3-ipc-murder-case-acquittal/" },
@@ -221,8 +221,6 @@
             { id: 48, name: "Kishorilal v. Gopal", citation: "2026 INSC 48", cat: "Civil", link: "https://www.caseciter.com/kishorilal-d-v-gopal-2026-insc-48-cpc-abatement-specific-performance-suit-res-judicata-lis-pendens/" },
             { id: 49, name: "State of U.P. v. Dinesh Kumar", citation: "2026 INSC 49", cat: "Public Employment", link: "https://www.caseciter.com/state-of-u-p-another-v-dinesh-kumar-2026-insc-49/" },
             { id: 50, name: "Ravi Shankar Bhushan v. Union of India", citation: "2026 INSC 50", cat: "Criminal", link: "https://www.caseciter.com/ravi-shankar-bhushan-v-union-of-india-2026-insc-50/#gsc.tab=0" },
-            { id: 51, name: "Ansal Crown Heights Flat Buyers Association v. Ansal Crown Infrabuild Pvt Ltd", citation: "2026 INSC 51", cat: "Consumer, Corporate, Important", link: "https://www.caseciter.com/ansal-crown-heights-flat-buyers-association-v-ansal-crown-infrabuild-pvt-ltd-2026-insc-51-consumer-protection-act-companies-act-ibc/" },
-            { id: 52, name: "Alka Shrirang Chavan v. Hemchandra Rajaram Bhonsale", citation: "2026 INSC 52", cat: "Civil, Transfer of Property Act, Specific Relief Act, Limitation, Important", link: "https://www.caseciter.com/alka-shrirang-chavan-v-hemchandra-rajaram-bhonsale-2026-insc-52-specific-relief-act-transfer-of-property-act-lis-pendens/" },
             { id: 53, name: "National Insurance Co Ltd v. Master Frewin Seby De Melo", citation: "", cat: "MACT", link: "https://www.caseciter.com/national-insurance-co-ltd-v-master-frewin-seby-de-melo-motor-accident-compensation-contest-by-insurance-company/" },
             { id: 54, name: "Bharat Pathania v. State of Himachal Pradesh", citation: "", cat: "Criminal", link: "https://www.caseciter.com/bharat-pathania-v-state-of-himachal-pradesh-criminal-cases-quashed-husband-undertaking/" },
             { id: 55, name: "Vijay Kumar v. State of Rajasthan", citation: "", cat: "Criminal", link: "https://www.caseciter.com/vijay-kumar-ors-v-state-of-rajasthan/" },
@@ -248,21 +246,16 @@
         const shareModal = document.getElementById('share-modal');
         const shareLinks = document.getElementById('share-links');
 
-        /**
-         * Dynamic Tag Extraction and Priority Rendering
-         */
         function getUniqueTags() {
             const counts = {};
             cases.forEach(c => {
                 if (c.cat) {
                     c.cat.split(',').forEach(t => {
                         const tag = t.trim();
-                        // Exclude Important from general count sort to handle it separately
                         if (tag && tag !== 'Important') counts[tag] = (counts[tag] || 0) + 1;
                     });
                 }
             });
-            // Sorted by judgment count
             return Object.keys(counts).sort((a, b) => counts[b] - counts[a]);
         }
 
@@ -272,27 +265,19 @@
             filterContainer.innerHTML = '';
             filterContainer.appendChild(allBtn);
 
-            // 1. Feature "Important" immediately after "All"
             const hasImportantData = cases.some(c => c.cat && c.cat.includes('Important'));
-            if (hasImportantData) {
-                createTagButton('Important');
-            }
+            if (hasImportantData) createTagButton('Important');
 
-            // 2. Determine how many others to show (Initial top 10 including All and Important)
-            // So we show up to 8 others if Important exists, or 9 others if it doesn't.
             const baseCount = hasImportantData ? 2 : 1; 
             const limit = 10 - baseCount; 
-            const othersToShow = isTagsExpanded ? sortedOthers : sortedOthers.slice(0, limit);
+            const othersToShow = isTagsExpanded ? sortedOthers : sortedOthers.slice(0, Math.max(0, limit));
 
-            othersToShow.forEach(tag => {
-                createTagButton(tag);
-            });
+            othersToShow.forEach(tag => createTagButton(tag));
 
-            // 3. More button logic
             if (!isTagsExpanded && sortedOthers.length > limit) {
                 const expandBtn = document.createElement('button');
                 expandBtn.className = 'px-3 py-1.5 text-[11px] md:text-xs font-bold text-indigo-600 hover:underline transition-all';
-                expandBtn.innerText = `+ ${sortedOthers.length - limit} more...`;
+                expandBtn.innerText = `+ ${sortedOthers.length - limit} more tags`;
                 expandBtn.onclick = handleTagExpansion;
                 filterContainer.appendChild(expandBtn);
             }
@@ -309,9 +294,7 @@
                     : (isImportant ? 'bg-white text-rose-600 border-rose-200 hover:bg-rose-50' : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50')
             }`;
             
-            if (isImportant) btn.innerHTML = `<i class="fas fa-star mr-1"></i>Important`;
-            else btn.innerText = tag;
-
+            btn.innerText = tag;
             btn.onclick = () => toggleFilter(tag);
             filterContainer.appendChild(btn);
         }
@@ -325,7 +308,6 @@
                 const form = document.getElementById('unlock-form');
                 form.classList.add('shake');
                 setTimeout(() => form.classList.remove('shake'), 500);
-                unlockCodeInput.placeholder = "Unlock to view more tags";
                 unlockCodeInput.focus();
             }
         }
@@ -370,18 +352,14 @@
             if (navigator.share) {
                 html += `
                     <button onclick="triggerSystemShare('${name.replace(/'/g, "\\'")}', '${citation}', '${url}')" class="flex flex-col items-center group">
-                        <div class="w-12 h-12 bg-amber-500 text-white rounded-2xl flex items-center justify-center mb-2 shadow-lg group-hover:scale-110 transition-transform">
-                            <i class="fas fa-note-sticky text-xl"></i>
-                        </div>
+                        <div class="w-12 h-12 bg-amber-500 text-white rounded-2xl flex items-center justify-center mb-2 shadow-lg group-hover:scale-110 transition-transform"><i class="fas fa-note-sticky text-xl"></i></div>
                         <span class="text-[9px] font-bold text-slate-500 uppercase">Save to Notes</span>
                     </button>
                 `;
             } else {
                 html += `
                     <button onclick="copyToClipboard('${cleanInfo.replace(/'/g, "\\'")}')" class="flex flex-col items-center group">
-                        <div class="w-12 h-12 bg-slate-400 text-white rounded-2xl flex items-center justify-center mb-2 shadow-lg group-hover:scale-110 transition-transform">
-                            <i class="fas fa-copy text-xl"></i>
-                        </div>
+                        <div class="w-12 h-12 bg-slate-400 text-white rounded-2xl flex items-center justify-center mb-2 shadow-lg group-hover:scale-110 transition-transform"><i class="fas fa-copy text-xl"></i></div>
                         <span class="text-[9px] font-bold text-slate-500 uppercase">Copy Text</span>
                     </button>
                 `;
@@ -389,33 +367,23 @@
 
             html += `
                 <a href="https://api.whatsapp.com/send?text=${encGen}" target="_blank" class="flex flex-col items-center group">
-                    <div class="w-12 h-12 bg-green-500 text-white rounded-2xl flex items-center justify-center mb-2 shadow-lg group-hover:scale-110 transition-transform">
-                        <i class="fab fa-whatsapp text-xl"></i>
-                    </div>
+                    <div class="w-12 h-12 bg-green-500 text-white rounded-2xl flex items-center justify-center mb-2 shadow-lg group-hover:scale-110 transition-transform"><i class="fab fa-whatsapp text-xl"></i></div>
                     <span class="text-[9px] font-bold text-slate-500 uppercase">WhatsApp</span>
                 </a>
                 <a href="https://twitter.com/intent/tweet?text=${encX}" target="_blank" class="flex flex-col items-center group">
-                    <div class="w-12 h-12 bg-black text-white rounded-2xl flex items-center justify-center mb-2 shadow-lg group-hover:scale-110 transition-transform">
-                        <i class="fa-brands fa-x-twitter text-xl"></i>
-                    </div>
+                    <div class="w-12 h-12 bg-black text-white rounded-2xl flex items-center justify-center mb-2 shadow-lg group-hover:scale-110 transition-transform"><i class="fa-brands fa-x-twitter text-xl"></i></div>
                     <span class="text-[9px] font-bold text-slate-500 uppercase">X</span>
                 </a>
                 <a href="https://t.me/share/url?url=${encUrl}&text=${encGen}" target="_blank" class="flex flex-col items-center group">
-                    <div class="w-12 h-12 bg-sky-500 text-white rounded-2xl flex items-center justify-center mb-2 shadow-lg group-hover:scale-110 transition-transform">
-                        <i class="fab fa-telegram-plane text-xl"></i>
-                    </div>
+                    <div class="w-12 h-12 bg-sky-500 text-white rounded-2xl flex items-center justify-center mb-2 shadow-lg group-hover:scale-110 transition-transform"><i class="fab fa-telegram-plane text-xl"></i></div>
                     <span class="text-[9px] font-bold text-slate-500 uppercase">Telegram</span>
                 </a>
                 <a href="https://www.facebook.com/sharer/sharer.php?u=${encUrl}" target="_blank" class="flex flex-col items-center group">
-                    <div class="w-12 h-12 bg-blue-700 text-white rounded-2xl flex items-center justify-center mb-2 shadow-lg group-hover:scale-110 transition-transform">
-                        <i class="fab fa-facebook-f text-xl"></i>
-                    </div>
+                    <div class="w-12 h-12 bg-blue-700 text-white rounded-2xl flex items-center justify-center mb-2 shadow-lg group-hover:scale-110 transition-transform"><i class="fab fa-facebook-f text-xl"></i></div>
                     <span class="text-[9px] font-bold text-slate-500 uppercase">Facebook</span>
                 </a>
                 <a href="https://www.linkedin.com/sharing/share-offsite/?url=${encUrl}" target="_blank" class="flex flex-col items-center group">
-                    <div class="w-12 h-12 bg-blue-600 text-white rounded-2xl flex items-center justify-center mb-2 shadow-lg group-hover:scale-110 transition-transform">
-                        <i class="fab fa-linkedin-in text-xl"></i>
-                    </div>
+                    <div class="w-12 h-12 bg-blue-600 text-white rounded-2xl flex items-center justify-center mb-2 shadow-lg group-hover:scale-110 transition-transform"><i class="fab fa-linkedin-in text-xl"></i></div>
                     <span class="text-[9px] font-bold text-slate-500 uppercase">LinkedIn</span>
                 </a>
             `;
@@ -427,9 +395,7 @@
         async function triggerSystemShare(name, citation, url) {
             const citePart = citation ? `, ${citation}` : '';
             const msg = `Thanks to CiteCase.in, I read this #SupremeCourt Judgment: ${name}${citePart}`;
-            try {
-                await navigator.share({ title: `CiteCase: ${name}`, text: msg, url: url });
-            } catch (err) { console.log("Sharing failed", err); }
+            try { await navigator.share({ title: `CiteCase: ${name}`, text: msg, url: url }); } catch (err) { console.log("Sharing failed", err); }
         }
 
         function copyToClipboard(text) {
@@ -442,14 +408,8 @@
             alert('Text copied to clipboard!');
         }
 
-        function closeShare() {
-            shareModal.classList.add('hidden');
-            shareModal.classList.remove('flex');
-        }
-
-        function closeShareOutside(e) {
-            if (e.target === shareModal) closeShare();
-        }
+        function closeShare() { shareModal.classList.add('hidden'); shareModal.classList.remove('flex'); }
+        function closeShareOutside(e) { if (e.target === shareModal) closeShare(); }
 
         function renderCases(filteredCases, query = "") {
             resultsTable.innerHTML = '';
@@ -479,46 +439,22 @@
             visibleCases.forEach(c => {
                 const isBlank = !c.name;
                 const row = document.createElement('tr');
-                row.className = isBlank ? 'bg-slate-50 group md:table-row' : 'hover:bg-indigo-50/40 transition-all group md:table-row';
+                row.className = isBlank ? 'bg-slate-50 md:table-row' : 'hover:bg-indigo-50/40 transition-all md:table-row';
                 
-                const citationHTML = `
-                    <td class="px-0 md:px-6 md:py-5 whitespace-nowrap">
-                        <span class="text-[10px] md:text-xs font-black text-slate-700 bg-slate-100 px-2 py-1 rounded inline-block min-w-[60px] text-center">
-                            ${c.citation ? highlightText(c.citation, query) : '<span class="text-slate-300 opacity-50">-</span>'}
-                        </span>
-                    </td>
-                `;
-
+                const citationHTML = `<td class="px-0 md:px-6 md:py-5 whitespace-nowrap"><span class="text-[10px] md:text-xs font-black text-slate-700 bg-slate-100 px-2 py-1 rounded inline-block min-w-[60px] text-center">${c.citation ? highlightText(c.citation, query) : '<span class="text-slate-300 opacity-50">-</span>'}</span></td>`;
+                
                 const categoryBadges = c.cat ? c.cat.split(',').map(tag => {
                     const cleanTag = tag.trim();
                     if (!cleanTag) return '';
-                    const isImportant = cleanTag === 'Important';
-                    const isCriminal = cleanTag === 'Criminal';
-                    const isCivil = cleanTag === 'Civil';
                     let bgClass = 'bg-slate-100 text-slate-500';
-                    if (isImportant) bgClass = 'bg-rose-50 text-rose-600';
-                    if (isCriminal) bgClass = 'bg-slate-800 text-white';
-                    if (isCivil) bgClass = 'bg-indigo-50 text-indigo-600';
+                    if (cleanTag === 'Important') bgClass = 'bg-rose-50 text-rose-600';
+                    if (cleanTag === 'Criminal') bgClass = 'bg-slate-800 text-white';
+                    if (cleanTag === 'Civil') bgClass = 'bg-indigo-50 text-indigo-600';
                     return `<span class="text-[9px] font-bold px-1.5 py-0.5 rounded ${bgClass} uppercase tracking-tight">${highlightText(cleanTag, query)}</span>`;
                 }).join(' ') : '';
 
-                const nameHTML = `
-                    <td class="px-0 md:px-6 md:py-5">
-                        <div class="text-sm md:text-[15px] font-bold leading-tight">
-                            ${c.cat && c.cat.includes('Important') ? '<i class="fas fa-star text-rose-500 mr-1.5 text-xs"></i>' : ''}
-                            ${!isBlank 
-                                ? `<a href="${c.link}" target="_blank" class="text-slate-800 hover:text-indigo-600 hover:underline transition-colors">${highlightText(c.name, query)}</a>` 
-                                : `<span class="italic text-slate-400 font-medium text-xs">Will Be Updated Shortly</span>`}
-                        </div>
-                        <div class="mt-1.5 flex flex-wrap gap-1">
-                            ${categoryBadges}
-                        </div>
-                    </td>
-                `;
-
-                const actionHTML = `
-                    <td class="px-0 md:px-6 md:py-5 whitespace-nowrap md:text-right">
-                        ${!isBlank ? `
+                const nameHTML = `<td class="px-0 md:px-6 md:py-5"><div class="text-sm md:text-[15px] font-bold leading-tight">${!isBlank ? `<a href="${c.link}" target="_blank" class="text-slate-800 hover:text-indigo-600 hover:underline transition-colors">${highlightText(c.name, query)}</a>` : `<span class="italic text-slate-400 font-medium text-xs">Will Be Updated Shortly</span>`}</div><div class="mt-1.5 flex flex-wrap gap-1">${categoryBadges}</div></td>`;
+                const actionHTML = `<td class="px-0 md:px-6 md:py-5 whitespace-nowrap md:text-right">${!isBlank ? `
                             <div class="flex items-center justify-end space-x-2">
                                 <a href="https://tally.so/r/dW0ddq" target="_blank" class="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition-all" title="Give Feedback">
                                     <i class="fas fa-comment-dots"></i>
@@ -527,27 +463,18 @@
                                     <i class="fas fa-share-nodes"></i>
                                 </button>
                             </div>
-                        ` : ''}
-                    </td>
-                `;
+                        ` : ''}</td>`;
+                
                 row.innerHTML = citationHTML + nameHTML + actionHTML;
                 resultsTable.appendChild(row);
             });
 
-            if (needsLock) {
-                lockSection.classList.remove('hidden');
-                showMoreContainer.classList.add('hidden');
-            } else if (sorted.length > displayLimit) {
-                showMoreContainer.classList.remove('hidden');
-            } else {
-                showMoreContainer.classList.add('hidden');
-            }
+            if (needsLock) { lockSection.classList.remove('hidden'); showMoreContainer.classList.add('hidden'); }
+            else if (sorted.length > displayLimit) { showMoreContainer.classList.remove('hidden'); }
+            else { showMoreContainer.classList.add('hidden'); }
         }
 
-        function showMore() {
-            displayLimit += 20;
-            handleFilter();
-        }
+        function showMore() { displayLimit += 20; handleFilter(); }
 
         function handleFilter() {
             const query = searchInput.value.toLowerCase().trim();
@@ -576,567 +503,8 @@
             handleFilter();
         }
 
-        function clearFilters() {
-            displayLimit = 20;
-            activeFilters = [];
-            renderFilterTags();
-            handleFilter();
-        }
-
-        searchInput.addEventListener('input', () => {
-            displayLimit = 20;
-            handleFilter();
-        });
-        
-        unlockCodeInput.addEventListener('input', handleUnlockInput);
-
-        window.onload = () => {
-            renderFilterTags();
-            renderCases(cases);
-        };
-    </script>
-</body>
-</html>                text-align: left !important;
-                display: flex !important;
-                gap: 0.5rem;
-            }
-        }
-
-        .shake { animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both; }
-        @keyframes shake {
-            10%, 90% { transform: translate3d(-1px, 0, 0); }
-            20%, 80% { transform: translate3d(2px, 0, 0); }
-            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
-            40%, 60% { transform: translate3d(4px, 0, 0); }
-        }
-
-        .share-modal {
-            backdrop-filter: blur(4px);
-            background: rgba(15, 23, 42, 0.6);
-        }
-    </style>
-</head>
-<body class="min-h-screen pb-20">
-
-    <!-- Header -->
-    <nav class="glass-header sticky top-0 z-50 border-b border-slate-200 py-3 px-4 md:py-4 md:px-6 mb-6 md:mb-8">
-        <div class="max-w-6xl mx-auto flex items-center justify-between">
-            <div class="flex items-center space-x-2 md:space-x-3">
-                <div class="bg-indigo-600 p-1.5 md:p-2 rounded-xl shadow-md shadow-indigo-200">
-                    <i class="fas fa-balance-scale text-white text-lg md:text-xl"></i>
-                </div>
-                <div>
-                    <h1 class="font-bold text-slate-900 text-base md:text-xl leading-none">CiteCase</h1>
-                    <span class="text-[9px] md:text-[10px] text-indigo-600 font-bold uppercase tracking-widest">Supreme Court Judgments 2026</span>
-                </div>
-            </div>
-            
-            <div class="flex items-center space-x-2 md:space-x-4">
-                <a href="https://citecase.in/register" target="_blank" class="flex items-center px-4 py-2 bg-indigo-600 text-white rounded-xl text-[10px] sm:text-xs font-bold shadow-lg shadow-indigo-200 hover:bg-indigo-700 transition-all">
-                    <i class="fas fa-crown mr-2"></i> SUBSCRIBE
-                </a>
-                
-                <div class="flex items-center space-x-3 hidden md:flex">
-                    <div id="stats" class="text-[11px] font-bold text-indigo-600 bg-indigo-50 px-3 py-1.5 rounded-full border border-indigo-100 uppercase tracking-tight">
-                        0 Judgments Covered
-                    </div>
-                    <span id="live-clock" class="text-xs font-mono text-slate-500 bg-slate-100 px-3 py-1 rounded-full border border-slate-200">13 Jan 2026</span>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <main class="max-w-5xl mx-auto px-4 md:px-6">
-        <!-- Search bar -->
-        <div class="relative group mb-6 md:mb-8">
-            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                <i class="fas fa-search text-slate-400 group-focus-within:text-indigo-500 transition-colors"></i>
-            </div>
-            <input 
-                type="text" 
-                id="search-input" 
-                placeholder="Search by Case Name, Citation, or Act..." 
-                class="block w-full pl-11 pr-4 py-3 md:py-4 bg-white border border-slate-200 rounded-2xl shadow-sm focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all text-base md:text-lg outline-none placeholder:text-slate-300"
-            >
-        </div>
-
-        <!-- Dynamic Filters Container -->
-        <div id="filter-container" class="flex flex-wrap gap-2 mb-6 md:mb-8">
-            <!-- All Button (Static) -->
-            <button id="filter-all" onclick="clearFilters()" class="filter-pill bg-indigo-600 text-white px-3 py-1.5 md:px-4 rounded-lg text-[11px] md:text-xs font-bold shadow-sm transition-all border border-indigo-600">All</button>
-            <!-- Tags will be injected here -->
-        </div>
-
-        <!-- Results Table -->
-        <div class="md:bg-white md:rounded-2xl md:shadow-xl md:shadow-slate-200/50 md:border md:border-slate-200 md:overflow-hidden relative">
-            <div class="overflow-x-auto">
-                <table class="w-full text-left responsive-table" id="judgments-table">
-                    <thead class="bg-slate-50/80 border-b border-slate-200 hidden md:table-header-group">
-                        <tr>
-                            <th class="px-6 py-4 text-[11px] font-bold text-slate-400 uppercase tracking-widest">Citation</th>
-                            <th class="px-6 py-4 text-[11px] font-bold text-slate-400 uppercase tracking-widest">Case Name</th>
-                            <th class="px-6 py-4 text-[11px] font-bold text-slate-400 uppercase tracking-widest text-right">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="case-results" class="divide-y divide-slate-100">
-                        <!-- Content injected by JS -->
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Auto-Lock Section -->
-            <div id="lock-section" class="hidden p-8 text-center bg-slate-50 border-t border-slate-100">
-                <div class="max-w-md mx-auto">
-                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm border border-slate-200">
-                        <i class="fas fa-lock text-slate-300 text-2xl"></i>
-                    </div>
-                    <h3 class="text-slate-900 font-bold text-lg mb-6">Unlock Full 2026 Database</h3>
-                    
-                    <!-- Unlock Input -->
-                    <div class="flex flex-col space-y-3" id="unlock-form">
-                        <input type="text" id="unlock-code" maxlength="8" placeholder="Enter Access Code" class="w-full px-4 py-3 rounded-xl border border-slate-200 outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 text-center font-mono tracking-widest uppercase text-lg">
-                        
-                        <!-- Incorrect Code Message -->
-                        <p id="unlock-error" class="hidden text-rose-600 text-xs font-bold bg-rose-50 p-3 rounded-lg border border-rose-100">
-                            If you are our subscriber, please contact us on Whatsapp to get the Access Code
-                        </p>
-                        
-                        <div class="text-[10px] text-slate-400 font-medium">Don't have a code? <a href="https://citecase.in/register" class="text-indigo-600 underline font-bold">Register here</a></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Show More Button -->
-            <div id="show-more-container" class="p-6 bg-slate-50 border-t border-slate-100 text-center hidden">
-                <button onclick="showMore()" class="px-6 py-2 bg-white border border-slate-200 text-indigo-600 font-bold text-xs rounded-xl shadow-sm hover:bg-indigo-50 transition-all uppercase tracking-wide">
-                    Load More
-                </button>
-            </div>
-        </div>
-
-        <div id="empty-state" class="hidden flex flex-col items-center justify-center py-20 text-slate-400">
-            <i class="fas fa-folder-open text-5xl mb-4 opacity-10"></i>
-            <p class="text-sm font-medium">No records found matching current criteria.</p>
-        </div>
-    </main>
-
-    <!-- Share Modal -->
-    <div id="share-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 share-modal" onclick="closeShareOutside(event)">
-        <div class="bg-white w-full max-w-sm rounded-3xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200" id="share-container">
-            <div class="p-6 border-b border-slate-100 flex items-center justify-between">
-                <h4 class="font-bold text-slate-900">Share Judgment</h4>
-                <button onclick="closeShare()" class="text-slate-400 hover:text-slate-600"><i class="fas fa-times"></i></button>
-            </div>
-            <div class="p-6 grid grid-cols-3 gap-6" id="share-links">
-                <!-- Links generated dynamically -->
-            </div>
-            <div class="p-4 bg-slate-50 text-center">
-                <p class="text-[10px] text-slate-400 font-medium uppercase tracking-tighter">Spread the knowledge with CiteCase</p>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        const cases = [
-            { id: 1, name: "Adani Power Ltd. vs Union of India", citation: "2026 INSC 1", cat: "Taxation", link: "https://www.caseciter.com/adani-power-ltd-vs-union-of-india-2026-insc-1-precedent-delegated-legislation-tax-levy/" },
-            { id: 2, name: "Gulfisha Fatima vs State", citation: "2026 INSC 2", cat: "Criminal, Important", link: "https://www.caseciter.com/gulfisha-fatima-vs-state-govt-of-nct-of-delhi-2025-insc-1-delhi-riots-cases/#gsc.tab=0" },
-            { id: 3, name: "Anjani Singh v. State of Uttar Pradesh", citation: "2026 INSC 3", cat: "Criminal, Important", link: "https://www.caseciter.com/anjani-singh-v-state-of-the-uttar-pradesh-2026-insc-3-ipc-murder-case-acquittal/" },
-            { id: 4, name: "Bhagheeratha Engineering Ltd vs State of Kerala", citation: "2026 INSC 4", cat: "Arbitration, Important", link: "https://www.caseciter.com/bhagheeratha-engineering-ltd-vs-state-of-kerala-2026-insc-4-arbitration-act/" },
-            { id: 5, name: "Motilal Oswal Financial Service Limited vs Santosh Cordeiro", citation: "2026 INSC 5", cat: "Arbitration, Important", link: "https://www.caseciter.com/motilal-oswal-financial-service-limited-vs-santosh-cordeiro-2026-insc-5-arbitration-act/" },
-            { id: 6, name: "Bhadra International (India) Pvt. Ltd. vs Airports Authority of India", citation: "2026 INSC 6", cat: "Commercial", link: "https://www.caseciter.com/bhadra-international-india-pvt-ltd-vs-airports-authority-of-india-2026-insc-6/" },
-            { id: 7, name: "Nirbhay Singh Suliya vs State of Madhya Pradesh", citation: "2026 INSC 7", cat: "Judiciary", link: "https://www.caseciter.com/nirbhay-singh-suliya-vs-state-of-madhya-phadesh-judiciary-disciplinary-proceedings-wrong-order/#gsc.tab=0" },
-            { id: 8, name: "NAK Engineering Company Pvt. Ltd. v. Tarun Keshrichand Shah", citation: "2026 INSC 8", cat: "Civil", link: "https://www.caseciter.com/nak-engineering-company-pvt-ltd-v-tarun-keshrichand-shah-and-ors-2026-insc-8-cpc-dominus-litis-necessary-proper-party/" },
-            { id: 9, name: "Panganti Vijaya v. United India Insurance Co. Ltd.", citation: "2026 INSC 9", cat: "Insurance", link: "https://www.caseciter.com/panganti-vijaya-v-united-india-insurance-co-ltd-2026-insc-9-workmans-compensation-act/" },
-            { id: 10, name: "Dharmendra Sharma v. M. Arunmozhi", citation: "2026 INSC 10", cat: "Contempt", link: "https://www.caseciter.com/dharmendra-sharma-v-m-arunmozhi-2026-insc-10-contempt/" },
-            { id: 11, name: "Subhash Aggarwal v. Mahender Pal Chhabra", citation: "2026 INSC 11", cat: "Civil", link: "https://www.caseciter.com/subhash-aggarwal-v-mahender-pal-class-2026-insc-11-specific-relief-act-equity/" },
-            { id: 12, name: "Arvind Dham v. Directorate of Enforcement", citation: "2026 INSC 12", cat: "PMLA", link: "https://www.caseciter.com/arvind-dham-v-directorate-of-enforcement-2026-insc-12-c/" },
-            { id: 13, name: "Pratima Das v. State of Himachal Pradesh", citation: "2026 INSC 13", cat: "Criminal", link: "https://www.caseciter.com/pratima-das-v-state-of-himachal-phadesh-2026-insc-13/#gsc.tab=0" },
-            { id: 14, name: "UV ARC v. Electrosteel Castings", citation: "2026 INSC 14", cat: "IBC, Important", link: "https://www.caseciter.com/uv-arc-v-electrosteel-castings-2026-insc-14-contract-act-see-to-it-guarantee/" },
-            { id: 15, name: "Union of India v. G. Kiran", citation: "2026 INSC 15", cat: "Public Employment", link: "https://www.caseciter.com/union-of-india-v-g-kiran-2026-insc-15-reservation-upsc-rules/" },
-            { id: 16, name: "Kadirkhan Ahmedkhan Pathan v. MSWC", citation: "2026 INSC 16", cat: "Public Employment", link: "https://www.caseciter.com/kadirkhan-ahmedkhan-pathan-v-maharashtra-state-warehousing-corporation-202/" },
-            { id: 17, name: "UV ARC v. Electrosteel Castings", citation: "2026 INSC 17", cat: "IBC", link: "https://www.caseciter.com/uv-arc-v-electrosteel-castings-2026-insc-14-contract-act-see-to-it-guarantee/" },
-            { id: 18, name: "IFGL Refractories Ltd. v. Orissa State Financial Corp", citation: "2026 INSC 18", cat: "Arbitration", link: "https://www.caseciter.com/ifgl-refractories-ltd-v-orissa-state-financial-corporation-2026-insc-18-art-14-constitution-arbitrariness-promissory-estoppel-bureaucuratic-lethargy/" },
-            { id: 19, name: "Commissioner of Customs (Import) v. Welkin Foods", citation: "2026 INSC 19", cat: "Taxation", link: "https://www.caseciter.com/commissioner-of-customs-import-v-welkin-foods-2026-insc-19-common-or-trade-parlance-test/" },
-            { id: 20, name: "Guru Pada Bera v. Binod Kumar", citation: "2026 INSC 20", cat: "Civil", link: "https://www.caseciter.com/guru-pada-bera-vs-binod-kumar-2026-insc-20/#gsc.tab=0" },
-            { id: 21, name: "Dalsukbhai Bachubhai Satasia v. State of Gujarat", citation: "2026 INSC 21", cat: "Criminal", link: "https://www.caseciter.com/dalsukbhai-bachubhai-satasia-v-state-of-gujarat-others-2026-insc-21-urban-land-ceiling-and-regulation-act/" },
-            { id: 22, name: "Golden Food Products India v. State of Uttar Pradesh", citation: "2026 INSC 22", cat: "Commercial", link: "https://www.caseciter.com/golden-food-products-india-v-state-of-uttar-propadesh-2026-insc-22-auction-expectation-of-higher-bid/" },
-            { id: 23, name: "Jaswinder Singh @ Shinder Singh v. State of Punjab", citation: "2026 INSC 23", cat: "Criminal", link: "https://www.caseciter.com/jaswinder-singh-shinder-singh-v-state-of-punjab-2026-insc-23/#gsc.tab=0" },
-            { id: 24, name: "Abhay Kumar Patel v. State of Bihar", citation: "2026 INSC 24", cat: "Criminal", link: "https://www.caseciter.com/abhay-kumar-patel-v-state-of-bihar-2026-insc-24-public-employment-recruitment-retrospective-amendment-of-rules/" },
-            { id: 25, name: "State (NCT of Delhi) v. Khimji Bhai Jadeja", citation: "2026 INSC 25", cat: "Criminal", link: "https://www.caseciter.com/state-nct-of-delhi-v-khimji-bhai-jadeja-2026-insc-25-crpc-bnss-triple-tests-same-transaction-consolidation-of-firs/" },
-            { id: 26, name: "Divjot Sekhon v. State of Punjab", citation: "2026 INSC 26", cat: "Civil", link: "https://www.caseciter.com/divjot-sekhon-v-state-of-punjab-and-others-2026-insc-26-mbbs-admission-policy-decision-judicial-review/" },
-            { id: 27, name: "S. Nagesh v. Shobha S. Aradhya", citation: "2026 INSC 27", cat: "Civil", link: "https://www.caseciter.com/s-nagesh-v-shobha-s-aradhya-2026-insc-27-ni-act-delay-condonation-taking-cognizance/" },
-            { id: 28, name: "Shalini Bhateja vs State of U.P.", citation: "2026 INSC 28", cat: "Criminal", link: "https://www.caseciter.com/shalini-bhateja-vs-state-of-u-p-2026-insc-28/" },
-            { id: 29, name: "S. Shakul Hameed v. Tamil Nadu State Transport Corp", citation: "2026 INSC 29", cat: "MACT", link: "https://www.caseciter.com/s-shakul-hameed-v-tamil-nadu-state-transport-corporation-ltd-2026-insc-29-motor-accident-compensation/" },
-            { id: 30, name: "Prasanna Kasini v. State of Telangana", citation: "2026 INSC 30", cat: "Criminal", link: "https://www.caseciter.com/prasanna-kasini-v-state-of-telangana-anr-2026-insc-30/" },
-            { id: 31, name: "Karnataka Lokayuktha Bagalkote v. Chandrashekar", citation: "2026 INSC 31", cat: "Criminal", link: "https://www.caseciter.com/karnataka-lokayuktha-bagalkote-district-bagalkot-vs-chandrashekar-2026-insc-31-criminal-case-disciplinary-proceedings/" },
-            { id: 32, name: "Regenta Hotels Private Limited v. Hotel Grand Centre Point", citation: "2026 INSC 32", cat: "Arbitration, Important", link: "https://www.caseciter.com/regenta-hotels-private-limited-v-hotel-grand-centre-point-2026-insc-32-ss-9-21-arbitration-act/" },
-            { id: 33, name: "The Property Company (P) Ltd. v. Rohinten Daddy Mazda", citation: "2026 INSC 33", cat: "Civil, Important", link: "https://www.caseciter.com/the-property-company-p-ltd-v-rohinten-daddy-mazda-neutral-citation-2026-insc-33/" },
-            { id: 34, name: "Jan De Nul Dredging India v. Tuticorin Port Trust", citation: "2026 INSC 34", cat: "Arbitration, Important", link: "https://www.caseciter.com/jan-de-nul-dredging-india-pvt-ltd-v-tuticorin-port-trust-2026-insc-34-ss-34-37-arbitration-act/" },
-            { id: 35, name: "Muslimveetil Chalakkal Ahammed Haji v. Sakeena Beevi", citation: "2026 INSC 35", cat: "Civil", link: "https://www.caseciter.com/muslimveetil-chalakkal-ahammed-haji-v-sakeena-beevi-neutral-citation-2026-insc-35/" },
-            { id: 36, name: "Md Imran @ D.C. Guddu v. State of Jharkhand", citation: "2026 INSC 36", cat: "Criminal", link: "https://www.caseciter.com/md-imran-d-c-guddu-v-state-of-jharkhand-2026-insc-36-s-319-crpc-bail-tests/" },
-            { id: 37, name: "Joint Director (ACB) A.P. v. Dayam Peda Ranga Rao", citation: "2026 INSC 37", cat: "Criminal", link: "https://www.caseciter.com/joint-director-rayalaseema-acb-a-p-v-dayam-peda-ranga-rao-2026-insc-37-crpc/" },
-            { id: 38, name: "State of Uttar Pradesh v. Bhawana Mishra", citation: "2026 INSC 38", cat: "Criminal", link: "https://www.caseciter.com/state-of-uttar-propadesh-v-bhawana-mishra-2026-insc-38-educational-courses-admission-legitimate-expectation/" },
-            { id: 39, name: "C.S. Prasad v. C. Satyakumar", citation: "2026 INSC 39", cat: "Civil", link: "https://www.caseciter.com/c-s-prasad-vs-c-satyakumar-and-others-2026-insc-39-s-482-crpc-quashing-civil-suit-delay/" },
-            { id: 40, name: "Sumit Bansal v. MGI Developers and Promoters", citation: "2026 INSC 40", cat: "Criminal", link: "https://www.caseciter.com/sumit-bansal-v-mgi-developers-and-promoters-2026-insc-40-ni-act-cheque-bounce-multiple-cheques/" },
-            { id: 41, name: "Roshini Devi v. State of Telangana", citation: "2026 INSC 41", cat: "Criminal", link: "https://www.caseciter.com/roshini-devi-v-state-of-telangana-2026-insc-41-preventive-detention-bail-apprehension/" },
-            { id: 42, name: "Yerram Vijay Kumar v. State of Telangana", citation: "2026 INSC 42", cat: "Criminal", link: "https://www.caseciter.com/yerram-vijay-kumar-v-state-of-telangana-2026-insc-42-s-212-companies-act-cognizance-taking/" },
-            { id: 43, name: "Ultratech Cement Ltd. v. State of Gujarat", citation: "2026 INSC 43", cat: "Taxation", link: "https://www.caseciter.com/ultratech-cement-ltd-v-state-of-gujarat-2026-insc-43-gujarat-motor-vehicles-tax-act-article-265-constitution-construction-equipment-vehicle/" },
-            { id: 44, name: "X v. State of Uttar Pradesh", citation: "2026 INSC 44", cat: "Criminal", link: "https://www.caseciter.com/x-v-state-of-uttar-pradesh-another-2026-insc-44/" },
-            { id: 45, name: "Shrikrishna v. State of Madhya Pradesh", citation: "2026 INSC 45", cat: "Criminal", link: "https://www.caseciter.com/shrikrishna-v-state-of-madhya-pradesh-2026-insc-45-ipc-murder-culpable-homicide/" },
-            { id: 46, name: "Jindal Equipment Leasing Consultancy Services Ltd v. CIT", citation: "2026 INSC 46", cat: "Taxation", link: "https://www.caseciter.com/indal-equipment-leasing-consultancy-services-ltd-v-commissioner-of-income-tax-delhi-ii-new-delhi-with-m-s-nalwa-investment-ltd-m-s-abhinandan-tradex-ltd-m-s-mansarover-tradex-ltd-neutra/" },
-            { id: 47, name: "State of Uttar Pradesh v. Anurudh", citation: "2026 INSC 47", cat: "Criminal", link: "https://www.caseciter.com/state-of-uttar-propadesh-v-anurudh-2026-insc-47-pocso-bail-medical-age-determination/" },
-            { id: 48, name: "Kishorilal v. Gopal", citation: "2026 INSC 48", cat: "Civil", link: "https://www.caseciter.com/kishorilal-d-v-gopal-2026-insc-48-cpc-abatement-specific-performance-suit-res-judicata-lis-pendens/" },
-            { id: 49, name: "State of U.P. v. Dinesh Kumar", citation: "2026 INSC 49", cat: "Public Employment", link: "https://www.caseciter.com/state-of-u-p-another-v-dinesh-kumar-2026-insc-49/" },
-            { id: 50, name: "Ravi Shankar Bhushan v. Union of India", citation: "2026 INSC 50", cat: "Criminal", link: "https://www.caseciter.com/ravi-shankar-bhushan-v-union-of-india-2026-insc-50/#gsc.tab=0" },
-            { id: 51, name: "Ansal Crown Heights Flat Buyers Association v. Ansal Crown Infrabuild Pvt Ltd", citation: "2026 INSC 51", cat: "Consumer, Corporate, Important", link: "https://www.caseciter.com/ansal-crown-heights-flat-buyers-association-v-ansal-crown-infrabuild-pvt-ltd-2026-insc-51-consumer-protection-act-companies-act-ibc/" },
-            { id: 52, name: "Alka Shrirang Chavan v. Hemchandra Rajaram Bhonsale", citation: "2026 INSC 52", cat: "Civil, Transfer of Property Act, Specific Relief Act, Limitation, Important", link: "https://www.caseciter.com/alka-shrirang-chavan-v-hemchandra-rajaram-bhonsale-2026-insc-52-specific-relief-act-transfer-of-property-act-lis-pendens/" },
-            { id: 53, name: "National Insurance Co Ltd v. Master Frewin Seby De Melo", citation: "", cat: "MACT", link: "https://www.caseciter.com/national-insurance-co-ltd-v-master-frewin-seby-de-melo-motor-accident-compensation-contest-by-insurance-company/" },
-            { id: 54, name: "Bharat Pathania v. State of Himachal Pradesh", citation: "", cat: "Criminal", link: "https://www.caseciter.com/bharat-pathania-v-state-of-himachal-pradesh-criminal-cases-quashed-husband-undertaking/" },
-            { id: 55, name: "Vijay Kumar v. State of Rajasthan", citation: "", cat: "Criminal", link: "https://www.caseciter.com/vijay-kumar-ors-v-state-of-rajasthan/" },
-            { id: 56, name: "Sukhchain v. State of Madhya Pradesh", citation: "", cat: "Criminal", link: "https://www.caseciter.com/sukhchain-v-state-of-madhya-pradesh-crpc-bnss/" },
-            { id: 57, name: "Union of India v. Paresh Chandra Mondal", citation: "", cat: "Civil", link: "https://www.caseciter.com/union-of-india-anr-v-paresh-chandra-mondal-order-dated-07-01-2026/#gsc.tab=0" }
-        ];
-
-        let activeFilters = [];
-        let isUnlocked = false;
-        let displayLimit = 20;
-        let isTagsExpanded = false;
-        const FREE_LIMIT = 10;
-        
-        const filterContainer = document.getElementById('filter-container');
-        const searchInput = document.getElementById('search-input');
-        const resultsTable = document.getElementById('case-results');
-        const emptyState = document.getElementById('empty-state');
-        const stats = document.getElementById('stats');
-        const showMoreContainer = document.getElementById('show-more-container');
-        const lockSection = document.getElementById('lock-section');
-        const unlockCodeInput = document.getElementById('unlock-code');
-        const unlockError = document.getElementById('unlock-error');
-        const shareModal = document.getElementById('share-modal');
-        const shareLinks = document.getElementById('share-links');
-
-        /**
-         * Dynamic Tag Extraction and Rendering
-         */
-        function getUniqueTags() {
-            const counts = {};
-            cases.forEach(c => {
-                if (c.cat) {
-                    c.cat.split(',').forEach(t => {
-                        const tag = t.trim();
-                        if (tag) counts[tag] = (counts[tag] || 0) + 1;
-                    });
-                }
-            });
-            // Sort by count descending
-            return Object.keys(counts).sort((a, b) => counts[b] - counts[a]);
-        }
-
-        function renderFilterTags() {
-            const allTags = getUniqueTags();
-            const visibleTags = isTagsExpanded ? allTags : allTags.slice(0, 10);
-            
-            // Keep the static 'All' button
-            const allBtn = document.getElementById('filter-all');
-            filterContainer.innerHTML = '';
-            filterContainer.appendChild(allBtn);
-
-            visibleTags.forEach(tag => {
-                const isSelected = activeFilters.includes(tag);
-                const btn = document.createElement('button');
-                const isImportant = tag === 'Important';
-                
-                btn.className = `filter-pill px-3 py-1.5 md:px-4 rounded-lg text-[11px] md:text-xs font-bold transition-all border ${
-                    isSelected 
-                        ? (isImportant ? 'bg-rose-600 text-white border-rose-600' : 'bg-indigo-600 text-white border-indigo-600') 
-                        : (isImportant ? 'bg-white text-rose-600 border-rose-200 hover:bg-rose-50' : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50')
-                }`;
-                
-                if (isImportant) btn.innerHTML = `<i class="fas fa-star mr-1"></i>Important`;
-                else btn.innerText = tag;
-
-                btn.onclick = () => toggleFilter(tag);
-                filterContainer.appendChild(btn);
-            });
-
-            // Expansion Button
-            if (!isTagsExpanded && allTags.length > 10) {
-                const expandBtn = document.createElement('button');
-                expandBtn.className = 'px-3 py-1.5 text-[11px] md:text-xs font-bold text-indigo-600 hover:underline';
-                expandBtn.innerText = `+ ${allTags.length - 10} more...`;
-                expandBtn.onclick = handleTagExpansion;
-                filterContainer.appendChild(expandBtn);
-            }
-        }
-
-        function handleTagExpansion() {
-            if (isUnlocked) {
-                isTagsExpanded = true;
-                renderFilterTags();
-            } else {
-                // Focus the unlock code field and show error/shake
-                lockSection.scrollIntoView({ behavior: 'smooth' });
-                const form = document.getElementById('unlock-form');
-                form.classList.add('shake');
-                setTimeout(() => form.classList.remove('shake'), 500);
-                unlockCodeInput.placeholder = "Unlock to view more tags";
-                unlockCodeInput.focus();
-            }
-        }
-
-        function highlightText(text, query) {
-            if (!query || !text) return text || "";
-            const re = new RegExp(`(${query})`, 'gi');
-            return text.replace(re, '<span class="highlight">$1</span>');
-        }
-
-        function handleUnlockInput(e) {
-            const code = e.target.value.trim();
-            unlockError.classList.add('hidden');
-            if (code.length === 8) {
-                if (code === "13012026") {
-                    isUnlocked = true;
-                    unlockError.classList.add('hidden');
-                    unlockCodeInput.blur();
-                    renderFilterTags(); // Refresh tags
-                    handleFilter(); // Refresh results
-                } else {
-                    unlockError.classList.remove('hidden');
-                    const form = document.getElementById('unlock-form');
-                    form.classList.add('shake');
-                    setTimeout(() => form.classList.remove('shake'), 500);
-                }
-            }
-        }
-
-        function openShare(name, citation, url) {
-            const citePart = citation ? `, ${citation}` : '';
-            const coreInfo = `${name}${citePart}`;
-            const cleanInfo = `${coreInfo} - Read notes: ${url}`;
-            const fullEncoded = encodeURIComponent(cleanInfo);
-            const rawUrl = encodeURIComponent(url);
-            
-            let html = "";
-            if (navigator.share) {
-                html += `
-                    <button onclick="triggerSystemShare('${name.replace(/'/g, "\\'")}', '${citation}', '${url}')" class="flex flex-col items-center group">
-                        <div class="w-12 h-12 bg-amber-500 text-white rounded-2xl flex items-center justify-center mb-2 shadow-lg group-hover:scale-110 transition-transform">
-                            <i class="fas fa-note-sticky text-xl"></i>
-                        </div>
-                        <span class="text-[9px] font-bold text-slate-500 uppercase">Save to Notes</span>
-                    </button>
-                `;
-            } else {
-                html += `
-                    <button onclick="copyToClipboard('${cleanInfo.replace(/'/g, "\\'")}')" class="flex flex-col items-center group">
-                        <div class="w-12 h-12 bg-slate-400 text-white rounded-2xl flex items-center justify-center mb-2 shadow-lg group-hover:scale-110 transition-transform">
-                            <i class="fas fa-copy text-xl"></i>
-                        </div>
-                        <span class="text-[9px] font-bold text-slate-500 uppercase">Copy Text</span>
-                    </button>
-                `;
-            }
-
-            html += `
-                <a href="https://api.whatsapp.com/send?text=${fullEncoded}" target="_blank" class="flex flex-col items-center group">
-                    <div class="w-12 h-12 bg-green-500 text-white rounded-2xl flex items-center justify-center mb-2 shadow-lg group-hover:scale-110 transition-transform">
-                        <i class="fab fa-whatsapp text-xl"></i>
-                    </div>
-                    <span class="text-[9px] font-bold text-slate-500 uppercase">WhatsApp</span>
-                </a>
-                <a href="https://twitter.com/intent/tweet?text=${fullEncoded}" target="_blank" class="flex flex-col items-center group">
-                    <div class="w-12 h-12 bg-black text-white rounded-2xl flex items-center justify-center mb-2 shadow-lg group-hover:scale-110 transition-transform">
-                        <i class="fa-brands fa-x-twitter text-xl"></i>
-                    </div>
-                    <span class="text-[9px] font-bold text-slate-500 uppercase">X</span>
-                </a>
-                <a href="https://t.me/share/url?url=${rawUrl}&text=${fullEncoded}" target="_blank" class="flex flex-col items-center group">
-                    <div class="w-12 h-12 bg-sky-500 text-white rounded-2xl flex items-center justify-center mb-2 shadow-lg group-hover:scale-110 transition-transform">
-                        <i class="fab fa-telegram-plane text-xl"></i>
-                    </div>
-                    <span class="text-[9px] font-bold text-slate-500 uppercase">Telegram</span>
-                </a>
-                <a href="https://www.facebook.com/sharer/sharer.php?u=${rawUrl}" target="_blank" class="flex flex-col items-center group">
-                    <div class="w-12 h-12 bg-blue-700 text-white rounded-2xl flex items-center justify-center mb-2 shadow-lg group-hover:scale-110 transition-transform">
-                        <i class="fab fa-facebook-f text-xl"></i>
-                    </div>
-                    <span class="text-[9px] font-bold text-slate-500 uppercase">Facebook</span>
-                </a>
-                <a href="https://www.linkedin.com/sharing/share-offsite/?url=${rawUrl}" target="_blank" class="flex flex-col items-center group">
-                    <div class="w-12 h-12 bg-blue-600 text-white rounded-2xl flex items-center justify-center mb-2 shadow-lg group-hover:scale-110 transition-transform">
-                        <i class="fab fa-linkedin-in text-xl"></i>
-                    </div>
-                    <span class="text-[9px] font-bold text-slate-500 uppercase">LinkedIn</span>
-                </a>
-            `;
-            shareLinks.innerHTML = html;
-            shareModal.classList.remove('hidden');
-            shareModal.classList.add('flex');
-        }
-
-        async function triggerSystemShare(name, citation, url) {
-            const citePart = citation ? `, ${citation}` : '';
-            const msg = `Thanks to CiteCase.in, I read this #SupremeCourt Judgment: ${name}${citePart}`;
-            try {
-                await navigator.share({ title: `CiteCase: ${name}`, text: msg, url: url });
-            } catch (err) { console.log("Sharing failed", err); }
-        }
-
-        function copyToClipboard(text) {
-            const el = document.createElement('textarea');
-            el.value = text;
-            document.body.appendChild(el);
-            el.select();
-            document.execCommand('copy');
-            document.body.removeChild(el);
-            alert('Text copied to clipboard!');
-        }
-
-        function closeShare() {
-            shareModal.classList.add('hidden');
-            shareModal.classList.remove('flex');
-        }
-
-        function closeShareOutside(e) {
-            if (e.target === shareModal) closeShare();
-        }
-
-        function renderCases(filteredCases, query = "") {
-            resultsTable.innerHTML = '';
-            lockSection.classList.add('hidden');
-            
-            if (filteredCases.length === 0) {
-                emptyState.classList.remove('hidden');
-                stats.innerText = `0 Judgments Covered`;
-                showMoreContainer.classList.add('hidden');
-                return;
-            }
-
-            stats.innerText = `${filteredCases.length} Judgments Covered`;
-            emptyState.classList.add('hidden');
-
-            const sorted = filteredCases.sort((a, b) => {
-                const aHasCite = !!(a.citation && a.citation.trim());
-                const bHasCite = !!(b.citation && b.citation.trim());
-                if (aHasCite !== bHasCite) return aHasCite ? -1 : 1;
-                return b.id - a.id;
-            });
-
-            const needsLock = !isUnlocked && sorted.length > FREE_LIMIT;
-            const currentLimit = isUnlocked ? displayLimit : FREE_LIMIT;
-            const visibleCases = sorted.slice(0, currentLimit);
-
-            visibleCases.forEach(c => {
-                const isBlank = !c.name;
-                const row = document.createElement('tr');
-                row.className = isBlank ? 'bg-slate-50 group md:table-row' : 'hover:bg-indigo-50/40 transition-all group md:table-row';
-                
-                const caseNameDisplay = isBlank 
-                    ? `<span class="italic text-slate-400 font-medium text-xs">Will Be Updated Shortly</span>` 
-                    : highlightText(c.name, query);
-
-                const citationHTML = `
-                    <td class="px-0 md:px-6 md:py-5 whitespace-nowrap">
-                        <span class="text-[10px] md:text-xs font-black text-slate-700 bg-slate-100 px-2 py-1 rounded inline-block min-w-[60px] text-center">
-                            ${c.citation ? highlightText(c.citation, query) : '<span class="text-slate-300 opacity-50">-</span>'}
-                        </span>
-                    </td>
-                `;
-
-                const categoryBadges = c.cat ? c.cat.split(',').map(tag => {
-                    const cleanTag = tag.trim();
-                    if (!cleanTag) return '';
-                    const isImportant = cleanTag === 'Important';
-                    const isCriminal = cleanTag === 'Criminal';
-                    const isCivil = cleanTag === 'Civil';
-                    let bgClass = 'bg-slate-100 text-slate-500';
-                    if (isImportant) bgClass = 'bg-rose-50 text-rose-600';
-                    if (isCriminal) bgClass = 'bg-slate-800 text-white';
-                    if (isCivil) bgClass = 'bg-indigo-50 text-indigo-600';
-                    return `<span class="text-[9px] font-bold px-1.5 py-0.5 rounded ${bgClass} uppercase tracking-tight">${highlightText(cleanTag, query)}</span>`;
-                }).join(' ') : '';
-
-                const nameHTML = `
-                    <td class="px-0 md:px-6 md:py-5">
-                        <div class="text-sm md:text-[15px] font-bold text-slate-800 leading-tight">
-                            ${c.cat && c.cat.includes('Important') ? '<i class="fas fa-star text-rose-500 mr-1.5 text-xs"></i>' : ''}${caseNameDisplay}
-                        </div>
-                        <div class="mt-1.5 flex flex-wrap gap-1">
-                            ${categoryBadges}
-                        </div>
-                    </td>
-                `;
-
-                const actionHTML = `
-                    <td class="px-0 md:px-6 md:py-5 whitespace-nowrap md:text-right">
-                        ${!isBlank ? `
-                            <div class="flex items-center justify-end space-x-2">
-                                <button onclick="openShare('${c.name.replace(/'/g, "\\'")}', '${c.citation}', '${c.link}')" class="p-2 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-xl transition-all">
-                                    <i class="fas fa-share-nodes"></i>
-                                </button>
-                                <a href="${c.link}" target="_blank" class="inline-flex items-center justify-center px-4 py-2 bg-indigo-600 text-[11px] font-bold rounded-xl text-white hover:bg-indigo-700 transition-all shadow-md shadow-indigo-100 uppercase tracking-wide">READ NOTES</a>
-                            </div>
-                        ` : ''}
-                    </td>
-                `;
-                row.innerHTML = citationHTML + nameHTML + actionHTML;
-                resultsTable.appendChild(row);
-            });
-
-            if (needsLock) {
-                lockSection.classList.remove('hidden');
-                showMoreContainer.classList.add('hidden');
-            } else if (sorted.length > displayLimit) {
-                showMoreContainer.classList.remove('hidden');
-            } else {
-                showMoreContainer.classList.add('hidden');
-            }
-        }
-
-        function showMore() {
-            displayLimit += 20;
-            handleFilter();
-        }
-
-        function handleFilter() {
-            const query = searchInput.value.toLowerCase().trim();
-            const filtered = cases.filter(c => {
-                const searchStr = `${c.name} ${c.citation} ${c.cat}`.toLowerCase();
-                const matchesSearch = !query || searchStr.includes(query);
-                const matchesCategory = activeFilters.length === 0 || (c.cat && activeFilters.every(f => c.cat.includes(f)));
-                return matchesSearch && matchesCategory;
-            });
-            renderCases(filtered, query);
-        }
-
-        function toggleFilter(category) {
-            displayLimit = 20;
-            if (category === 'Important') {
-                const index = activeFilters.indexOf('Important');
-                if (index > -1) activeFilters.splice(index, 1);
-                else activeFilters.push('Important');
-            } else {
-                const isSelected = activeFilters.includes(category);
-                const hasImportant = activeFilters.includes('Important');
-                activeFilters = hasImportant ? ['Important'] : [];
-                if (!isSelected) activeFilters.push(category);
-            }
-            renderFilterTags();
-            handleFilter();
-        }
-
-        function clearFilters() {
-            displayLimit = 20;
-            activeFilters = [];
-            renderFilterTags();
-            handleFilter();
-        }
-
-        searchInput.addEventListener('input', () => {
-            displayLimit = 20;
-            handleFilter();
-        });
-        
+        function clearFilters() { displayLimit = 20; activeFilters = []; renderFilterTags(); handleFilter(); }
+        searchInput.addEventListener('input', () => { displayLimit = 20; handleFilter(); });
         unlockCodeInput.addEventListener('input', handleUnlockInput);
 
         window.onload = () => {
