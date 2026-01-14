@@ -1,87 +1,60 @@
-[
-
-{
-"id": 60,
-"name": "Union of India & Anr. v. Paresh Chandra Mondal",
-"citation": "",
-"cat": "Provident Funds Act",
-"link": "https://www.caseciter.com/union-of-india-anr-v-paresh-chandra-mondal-order-dated-07-01-2026/#gsc.tab=0"
-},
-{
-"id": 59,
-"name": "National Insurance Co. Ltd. v. Master Frewin Seby De Melo",
-"citation": "",
-"cat": "MACT",
-"link": "https://www.caseciter.com/national-insurance-co-ltd-v-master-frewin-seby-de-melo-motor-accident-compensation-contest-by-insurance-company/#gsc.tab=0"
-},
-{
-"id": 58,
-"name": "Bharat Pathania v. State of Himachal Pradesh",
-"citation": "",
-"cat": "Criminal, Constitution, Article 142 Constitution",
-"link": "https://www.google.com/search?q=https://www.caseciter.com/bharat-pathania-v-state-of-himachal-phadesh-criminal-cases-quashed-husband-undertaking/%23gsc.tab%3D0"
-},
-{
-"id": 57,
-"name": "Vijay Kumar & Ors. v. State of Rajasthan",
-"citation": "",
-"cat": "Criminal",
-"link": "https://www.caseciter.com/vijay-kumar-ors-v-state-of-rajasthan/#gsc.tab=0"
-},
-{
-"id": 56,
-"name": "Sukhchain v. State of Madhya Pradesh",
-"citation": "",
-"cat": "Civil, CrPC, BNSS",
-"link": "https://www.caseciter.com/sukhchain-v-state-of-madhya-pradesh-crpc-bnss/#gsc.tab=0"
-},
-{
-"id": 55,
-"name": "Centre for Public Interest Litigation v. Union of India",
-"citation": "2026 INSC 55",
-"cat": "Constitution, PC Act, Important",
-"link": "https://www.caseciter.com/centre-for-public-interest-litigation-v-union-of-india-2026-insc-55-s-17-a-prevention-of-corruption-act-constitutional-validity-split-verdict/#gsc.tab=0"
-},
-{
-"id": 54,
-"name": "Kanchana Rai v. Geeta Sharma",
-"citation": "2026 INSC 54",
-"cat": "Family, Hindu Adoptions and Maintenance Act (HAMA), Constitution of India (CoI), Interpretation of Statutes, Important",
-"link": "https://www.caseciter.com/kanchana-rai-v-geeta-sharma-2026-insc-54-hindu-adoptions-and-maintenance-act/#gsc.tab=0"
-},
-{
-"id": 53,
-"name": "Sujata Bora v. Coal India Limited",
-"citation": "2026 INSC 53",
-"cat": "RPwD Act, Constitution, Important",
-"link": "https://www.caseciter.com/sujata-bora-v-coal-india-limited-2026-insc-53-rpwd-act-corporate-social-responsibility-reasonable-accommodation/#gsc.tab=0"
-},
-{
-"id": 52,
-"name": "Alka Shrirang Chavan v. Hemchandra Rajaram Bhonsale",
-"citation": "2026 INSC 52",
-"cat": "Civil, Transfer of Property Act, Specific Relief Act, Limitation, Important",
-"link": "https://www.caseciter.com/alka-shrirang-chavan-v-hemchandra-rajaram-bhonsale-2026-insc-52-specific-relief-act-transfer-of-property-act-lis-pendens/"
-},
-{
-"id": 51,
-"name": "Ansal Crown Heights Flat Buyers Association v. Ansal Crown Infrabuild Pvt Ltd",
-"citation": "2026 INSC 51",
-"cat": "Consumer, Corporate, Important",
-"link": "https://www.caseciter.com/ansal-crown-heights-flat-buyers-association-v-ansal-crown-infrabuild-pvt-ltd-2026-insc-51-consumer-protection-act-companies-act-ibc/"
-},
-{
-"id": 50,
-"name": "Ravi Shankar Bhushan v. Union of India",
-"citation": "2026 INSC 50",
-"cat": "Criminal",
-"link": "https://www.caseciter.com/ravi-shankar-bhushan-v-union-of-india-2026-insc-50/#gsc.tab=0"
-},
-{
-"id": 1,
-"name": "Adani Power Ltd. vs Union of India",
-"citation": "2026 INSC 1",
-"cat": "Taxation",
-"link": "https://www.caseciter.com/adani-power-ltd-vs-union-of-india-2026-insc-1-precedent-delegated-legislation-tax-levy/"
-}
-]
+{ id: 61, name: "Pradip Monu Arunkumar Chhotelal Tiwari v. State of Gujarat", citation: "", cat: "Constitution, Article 136 Constitution", link: "https://www.caseciter.com/pradip-monu-arunkumar-chhotelal-tiwari-v-state-of-gujarat-slp-failure-to-disclose-all-material-facts/" },
+            { id: 60, name: "Union of India & Anr. v. Paresh Chandra Mondal", citation: "", cat: "Provident Funds Act", link: "https://www.caseciter.com/union-of-india-anr-v-paresh-chandra-mondal-order-dated-07-01-2026/#gsc.tab=0" },
+            { id: 59, name: "National Insurance Co. Ltd. v. Master Frewin Seby De Melo", citation: "", cat: "MACT", link: "https://www.caseciter.com/national-insurance-co-ltd-v-master-frewin-seby-de-melo-motor-accident-compensation-contest-by-insurance-company/#gsc.tab=0" },
+            { id: 58, name: "Bharat Pathania v. State of Himachal Pradesh", citation: "", cat: "Criminal, Constitution, Article 142 Constitution", link: "https://www.caseciter.com/bharat-pathania-v-state-of-himachal-phadesh-criminal-cases-quashed-husband-undertaking/#gsc.tab=0" },
+            { id: 57, name: "Vijay Kumar & Ors. v. State of Rajasthan", citation: "", cat: "Criminal", link: "https://www.caseciter.com/vijay-kumar-ors-v-state-of-rajasthan/#gsc.tab=0" },
+            { id: 56, name: "Sukhchain v. State of Madhya Pradesh", citation: "", cat: "Civil, CrPC, BNSS", link: "https://www.caseciter.com/sukhchain-v-state-of-madhya-pradesh-crpc-bnss/#gsc.tab=0" },
+            { id: 55, name: "Centre for Public Interest Litigation v. Union of India", citation: "2026 INSC 55", cat: "Constitution, PC Act, Important", link: "https://www.caseciter.com/centre-for-public-interest-litigation-v-union-of-india-2026-insc-55-s-17-a-prevention-of-corruption-act-constitutional-validity-split-verdict/#gsc.tab=0" },
+            { id: 54, name: "Kanchana Rai v. Geeta Sharma", citation: "2026 INSC 54", cat: "Family, HAMA, Constitution of India (CoI), Important", link: "https://www.caseciter.com/kanchana-rai-v-geeta-sharma-2026-insc-54-hindu-adoptions-and-maintenance-act/#gsc.tab=0" },
+            { id: 53, name: "Sujata Bora v. Coal India Limited", citation: "2026 INSC 53", cat: "RPwD Act, Constitution, Important", link: "https://www.caseciter.com/sujata-bora-v-coal-india-limited-2026-insc-53-rpwd-act-corporate-social-responsibility-reasonable-accommodation/#gsc.tab=0" },
+            { id: 52, name: "Alka Shrirang Chavan v. Hemchandra Rajaram Bhonsale", citation: "2026 INSC 52", cat: "Civil, Transfer of Property Act, Specific Relief Act, Limitation, Important", link: "https://www.caseciter.com/alka-shrirang-chavan-v-hemchandra-rajaram-bhonsale-2026-insc-52-specific-relief-act-transfer-of-property-act-lis-pendens/" },
+            { id: 51, name: "Ansal Crown Heights Flat Buyers Association v. Ansal Crown Infrabuild Pvt Ltd", citation: "2026 INSC 51", cat: "Consumer, Corporate, Important", link: "https://www.caseciter.com/ansal-crown-heights-flat-buyers-association-v-ansal-crown-infrabuild-pvt-ltd-2026-insc-51-consumer-protection-act-companies-act-ibc/" },
+            { id: 50, name: "Ravi Shankar Bhushan v. Union of India", citation: "2026 INSC 50", cat: "Criminal", link: "https://www.caseciter.com/ravi-shankar-bhushan-v-union-of-india-2026-insc-50/#gsc.tab=0" },
+            { id: 48, name: "Kishorilal v. Gopal", citation: "2026 INSC 48", cat: "Civil", link: "https://www.caseciter.com/kishorilal-d-v-gopal-2026-insc-48-cpc-abatement-specific-performance-suit-res-judicata-lis-pendens/" },
+            { id: 47, name: "State of Uttar Pradesh v. Anurudh", citation: "2026 INSC 47", cat: "Criminal", link: "https://www.caseciter.com/state-of-uttar-propadesh-v-anurudh-2026-insc-47-pocso-bail-medical-age-determination/" },
+            { id: 45, name: "Shrikrishna v. State of Madhya Pradesh", citation: "2026 INSC 45", cat: "Criminal", link: "https://www.caseciter.com/shrikrishna-v-state-of-madhya-pradesh-2026-insc-45-ipc-murder-culpable-homicide/" },
+            { id: 44, name: "X v. State of Uttar Pradesh", citation: "2026 INSC 44", cat: "Criminal", link: "https://www.caseciter.com/x-v-state-of-uttar-pradesh-another-2026-insc-44/" },
+            { id: 43, name: "Ultratech Cement Ltd. v. State of Gujarat", citation: "2026 INSC 43", cat: "Taxation", link: "https://www.caseciter.com/ultratech-cement-ltd-v-state-of-gujarat-2026-insc-43-gujarat-motor-vehicles-tax-act-article-265-constitution-construction-equipment-vehicle/" },
+            { id: 42, name: "Yerram Vijay Kumar v. State of Telangana", citation: "2026 INSC 42", cat: "Criminal", link: "https://www.caseciter.com/yerram-vijay-kumar-v-state-of-telangana-2026-insc-42-s-212-companies-act-cognizance-taking/" },
+            { id: 41, name: "Roshini Devi v. State of Telangana", citation: "2026 INSC 41", cat: "Criminal", link: "https://www.caseciter.com/roshini-devi-v-state-of-telangana-2026-insc-41-preventive-detention-bail-apprehension/" },
+            { id: 40, name: "Sumit Bansal v. MGI Developers and Promoters", citation: "2026 INSC 40", cat: "Criminal", link: "https://www.caseciter.com/sumit-bansal-v-mgi-developers-and-promoters-2026-insc-40-ni-act-cheque-bounce-multiple-cheques/" },
+            { id: 39, name: "C.S. Prasad v. C. Satyakumar", citation: "2026 INSC 39", cat: "Civil", link: "https://www.caseciter.com/c-s-prasad-vs-c-satyakumar-and-others-2026-insc-39-s-482-crpc-quashing-civil-suit-delay/" },
+            { id: 38, name: "State of Uttar Pradesh v. Bhawana Mishra", citation: "2026 INSC 38", cat: "Criminal", link: "https://www.caseciter.com/state-of-uttar-propadesh-v-bhawana-mishra-2026-insc-38-educational-courses-admission-legitimate-expectation/" },
+            { id: 37, name: "Joint Director (ACB) A.P. v. Dayam Peda Ranga Rao", citation: "2026 INSC 37", cat: "Criminal", link: "https://www.caseciter.com/joint-director-rayalaseema-acb-a-p-v-dayam-peda-ranga-rao-2026-insc-37-crpc/" },
+            { id: 36, name: "Md Imran @ D.C. Guddu v. State of Jharkhand", citation: "2026 INSC 36", cat: "Criminal", link: "https://www.caseciter.com/md-imran-d-c-guddu-v-state-of-jharkhand-2026-insc-36-s-319-crpc-bail-tests/" },
+            { id: 35, name: "Muslimveetil Chalakkal Ahammed Haji v. Sakeena Beevi", citation: "2026 INSC 35", cat: "Civil", link: "https://www.caseciter.com/muslimveetil-chalakkal-ahammed-haji-v-sakeena-beevi-neutral-citation-2026-insc-35/" },
+            { id: 34, name: "Jan De Nul Dredging India v. Tuticorin Port Trust", citation: "2026 INSC 34", cat: "Arbitration, Important", link: "https://www.caseciter.com/jan-de-nul-dredging-india-pvt-ltd-v-tuticorin-port-trust-2026-insc-34-ss-34-37-arbitration-act/" },
+            { id: 33, name: "The Property Company (P) Ltd. v. Rohinten Daddy Mazda", citation: "2026 INSC 33", cat: "Civil, Important", link: "https://www.caseciter.com/the-property-company-p-ltd-v-rohinten-daddy-mazda-neutral-citation-2026-insc-33/" },
+            { id: 32, name: "Regenta Hotels Private Limited v. Hotel Grand Centre Point", citation: "2026 INSC 32", cat: "Arbitration, Important", link: "https://www.caseciter.com/regenta-hotels-private-limited-v-hotel-grand-centre-point-2026-insc-32-ss-9-21-arbitration-act/" },
+            { id: 31, name: "Karnataka Lokayuktha Bagalkote v. Chandrashekar", citation: "2026 INSC 31", cat: "Criminal", link: "https://www.caseciter.com/karnataka-lokayuktha-bagalkote-district-bagalkot-vs-chandrashekar-2026-insc-31-criminal-case-disciplinary-proceedings/" },
+            { id: 30, name: "Prasanna Kasini v. State of Telangana", citation: "2026 INSC 30", cat: "Criminal", link: "https://www.caseciter.com/prasanna-kasini-v-state-of-telangana-anr-2026-insc-30/" },
+            { id: 29, name: "S. Shakul Hameed v. Tamil Nadu State Transport Corp", citation: "2026 INSC 29", cat: "MACT", link: "https://www.caseciter.com/s-shakul-hameed-v-tamil-nadu-state-transport-corporation-ltd-2026-insc-29-motor-accident-compensation/" },
+            { id: 28, name: "Shalini Bhateja vs State of U.P.", citation: "2026 INSC 28", cat: "Criminal", link: "https://www.caseciter.com/shalini-bhateja-vs-state-of-u-p-2026-insc-28/" },
+            { id: 27, name: "S. Nagesh v. Shobha S. Aradhya", citation: "2026 INSC 27", cat: "Civil", link: "https://www.caseciter.com/s-nagesh-v-shobha-s-aradhya-2026-insc-27-ni-act-delay-condonation-taking-cognizance/" },
+            { id: 26, name: "Divjot Sekhon v. State of Punjab", citation: "2026 INSC 26", cat: "Civil", link: "https://www.caseciter.com/divjot-sekhon-v-state-of-punjab-and-others-2026-insc-26-mbbs-admission-policy-decision-judicial-review/" },
+            { id: 25, name: "State (NCT of Delhi) v. Khimji Bhai Jadeja", citation: "2026 INSC 25", cat: "Criminal", link: "https://www.caseciter.com/state-nct-of-delhi-v-khimji-bhai-jadeja-2026-insc-25-crpc-bnss-triple-tests-same-transaction-consolidation-of-firs/" },
+            { id: 24, name: "Abhay Kumar Patel v. State of Bihar", citation: "2026 INSC 24", cat: "Criminal", link: "https://www.caseciter.com/abhay-kumar-patel-v-state-of-bihar-2026-insc-24-public-employment-recruitment-retrospective-amendment-of-rules/" },
+            { id: 23, name: "Jaswinder Singh @ Shinder Singh v. State of Punjab", citation: "2026 INSC 23", cat: "Criminal", link: "https://www.caseciter.com/jaswinder-singh-shinder-singh-v-state-of-punjab-2026-insc-23/#gsc.tab=0" },
+            { id: 22, name: "Golden Food Products India v. State of Uttar Pradesh", citation: "2026 INSC 22", cat: "Commercial", link: "https://www.caseciter.com/golden-food-products-india-v-state-of-uttar-propadesh-2026-insc-22-auction-expectation-of-higher-bid/" },
+            { id: 21, name: "Dalsukbhai Bachubhai Satasia v. State of Gujarat", citation: "2026 INSC 21", cat: "Criminal", link: "https://www.caseciter.com/dalsukbhai-bachubhai-satasia-v-state-of-gujarat-others-2026-insc-21-urban-land-ceiling-and-regulation-act/" },
+            { id: 20, name: "Guru Pada Bera v. Binod Kumar", citation: "2026 INSC 20", cat: "Civil", link: "https://www.caseciter.com/guru-pada-bera-vs-binod-kumar-2026-insc-20/#gsc.tab=0" },
+            { id: 19, name: "Commissioner of Customs (Import) v. Welkin Foods", citation: "2026 INSC 19", cat: "Taxation", link: "https://www.caseciter.com/commissioner-of-customs-import-v-welkin-foods-2026-insc-19-common-or-trade-parlance-test/" },
+            { id: 18, name: "IFGL Refractories Ltd. v. Orissa State Financial Corp", citation: "2026 INSC 18", cat: "Arbitration", link: "https://www.caseciter.com/ifgl-refractories-ltd-v-orissa-state-financial-corporation-2026-insc-18-art-14-constitution-arbitrariness-promissory-estoppel-bureaucuratic-lethargy/" },
+            { id: 17, name: "State of Kerala v. Mary Jacob", citation: "2026 INSC 17", cat: "Civil", link: "https://www.caseciter.com/#" },
+            { id: 16, name: "Kadirkhan Ahmedkhan Pathan v. MSWC", citation: "2026 INSC 16", cat: "Public Employment", link: "https://www.caseciter.com/kadirkhan-ahmedkhan-pathan-v-maharashtra-state-warehousing-corporation-202/" },
+            { id: 15, name: "Union of India v. G. Kiran", citation: "2026 INSC 15", cat: "Public Employment", link: "https://www.caseciter.com/union-of-india-v-g-kiran-2026-insc-15-reservation-upsc-rules/" },
+            { id: 14, name: "UV ARC v. Electrosteel Castings", citation: "2026 INSC 14", cat: "IBC, Important", link: "https://www.caseciter.com/uv-arc-v-electrosteel-castings-2026-insc-14-contract-act-see-to-it-guarantee/" },
+            { id: 13, name: "Pratima Das v. State of Himachal Pradesh", citation: "2026 INSC 13", cat: "Criminal", link: "https://www.caseciter.com/pratima-das-v-state-of-himachal-phadesh-2026-insc-13/#gsc.tab=0" },
+            { id: 12, name: "Arvind Dham v. Directorate of Enforcement", citation: "2026 INSC 12", cat: "PMLA", link: "https://www.caseciter.com/arvind-dham-v-directorate-of-enforcement-2026-insc-12-c/" },
+            { id: 11, name: "Subhash Aggarwal v. Mahender Pal Chhabra", citation: "2026 INSC 11", cat: "Civil", link: "https://www.caseciter.com/subhash-aggarwal-v-mahender-pal-class-2026-insc-11-specific-relief-act-equity/" },
+            { id: 10, name: "Dharmendra Sharma v. M. Arunmozhi", citation: "2026 INSC 10", cat: "Contempt", link: "https://www.caseciter.com/dharmendra-sharma-v-m-arunmozhi-2026-insc-10-contempt/" },
+            { id: 9, name: "Panganti Vijaya v. United India Insurance Co. Ltd.", citation: "2026 INSC 9", cat: "Insurance", link: "https://www.caseciter.com/panganti-vijaya-v-united-india-insurance-co-ltd-2026-insc-9-workmans-compensation-act/" },
+            { id: 8, name: "NAK Engineering Company Pvt. Ltd. v. Tarun Keshrichand Shah", citation: "2026 INSC 8", cat: "Civil", link: "https://www.caseciter.com/nak-engineering-company-pvt-ltd-v-tarun-keshrichand-shah-and-ors-2026-insc-8-cpc-dominus-litis-necessary-proper-party/" },
+            { id: 7, name: "R. Murali v. State of Tamil Nadu", citation: "2026 INSC 7", cat: "Judiciary", link: "https://www.caseciter.com/nirbhay-singh-suliya-vs-state-of-madhya-phadesh-judiciary-disciplinary-proceedings-wrong-order/#gsc.tab=0" },
+            { id: 6, name: "Bhadra International (India) Pvt. Ltd. vs Airports Authority of India", citation: "2026 INSC 6", cat: "Commercial", link: "https://www.caseciter.com/bhadra-international-india-pvt-ltd-vs-airports-authority-of-india-2026-insc-6/" },
+            { id: 5, name: "Motilal Oswal Financial Service Limited vs Santosh Cordeiro", citation: "2026 INSC 5", cat: "Arbitration, Important", link: "https://www.caseciter.com/motilal-oswal-financial-service-limited-vs-santosh-cordeiro-2026-insc-5-arbitration-act/" },
+            { id: 4, name: "Bhagheeratha Engineering Ltd vs State of Kerala", citation: "2026 INSC 4", cat: "Arbitration, Important", link: "https://www.caseciter.com/bhagheeratha-engineering-ltd-vs-state-of-kerala-2026-insc-4-arbitration-act/" },
+            { id: 3, name: "Anjani Singh v. State of Uttar Pradesh", citation: "2026 INSC 3", cat: "Criminal, Important", link: "https://www.caseciter.com/anjani-singh-v-state-of-the-uttar-pradesh-2026-insc-3-ipc-murder-case-acquittal/" },
+            { id: 2, name: "Gulfisha Fatima vs State", citation: "2026 INSC 2", cat: "Criminal, Important", link: "https://www.caseciter.com/gulfisha-fatima-vs-state-govt-of-nct-of-delhi-2025-insc-1-delhi-riots-cases/#gsc.tab=0" },
+            { id: 1, name: "Adani Power Ltd. vs Union of India", citation: "2026 INSC 1", cat: "Taxation", link: "https://www.caseciter.com/adani-power-ltd-vs-union-of-india-2026-insc-1-precedent-delegated-legislation-tax-levy/" }
+        ];
