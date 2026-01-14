@@ -57,4 +57,4 @@
             { id: 3, name: "Anjani Singh v. State of Uttar Pradesh", citation: "2026 INSC 3", cat: "Criminal, Important", link: "https://www.caseciter.com/anjani-singh-v-state-of-the-uttar-pradesh-2026-insc-3-ipc-murder-case-acquittal/" },
             { id: 2, name: "Gulfisha Fatima vs State", citation: "2026 INSC 2", cat: "Criminal, Important", link: "https://www.caseciter.com/gulfisha-fatima-vs-state-govt-of-nct-of-delhi-2025-insc-1-delhi-riots-cases/#gsc.tab=0" },
             { id: 1, name: "Adani Power Ltd. vs Union of India", citation: "2026 INSC 1", cat: "Taxation", link: "https://www.caseciter.com/adani-power-ltd-vs-union-of-india-2026-insc-1-precedent-delegated-legislation-tax-levy/" }
-        ];
+        ]
