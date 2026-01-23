@@ -37,17 +37,17 @@
         }
 
         .btn-action {
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
-        .btn-action:hover {
-            transform: translateY(-2px);
+        .btn-action:active {
+            transform: scale(0.96);
         }
 
         /* CiteCase Logo Styling */
         .logo-container {
             display: inline-flex;
             font-weight: 800;
-            font-size: clamp(3rem, 10vw, 6rem);
+            font-size: clamp(2.5rem, 12vw, 6rem);
             letter-spacing: -0.05em;
         }
         .logo-cite {
@@ -67,6 +67,12 @@
             color: #166534;
             border-color: #16a34a !important;
         }
+
+        /* Adjusting for very small screens */
+        @media (max-width: 380px) {
+            .btn-text { font-size: 0.9rem; }
+            .logo-container { font-size: 2.5rem; }
+        }
     </style>
 </head>
 <body class="bg-white text-black overflow-hidden h-screen w-screen no-select">
@@ -81,7 +87,7 @@
     <div class="tap-zone right-0" onclick="nextSlide()"></div>
 
     <!-- App Container -->
-    <div id="app" class="relative h-full w-full flex flex-col items-center justify-center p-6 md:p-24">
+    <div id="app" class="relative h-full w-full flex flex-col items-center justify-center p-4 md:p-24">
         
         <!-- Loading State -->
         <div id="loading" class="flex flex-col items-center">
@@ -96,18 +102,18 @@
         </div>
 
         <!-- Controls Footer -->
-        <div id="controls" class="hidden fixed bottom-10 left-0 w-full px-6 md:px-10 flex justify-between items-center z-50 pointer-events-none">
-            <div class="flex items-center gap-3 md:gap-8 pointer-events-auto">
+        <div id="controls" class="hidden fixed bottom-6 md:bottom-10 left-0 w-full px-6 md:px-10 flex justify-between items-center z-50 pointer-events-none">
+            <div class="flex items-center gap-2 md:gap-8 pointer-events-auto">
                 <button onclick="prevSlide()" id="prev-btn" class="p-2 text-gray-300 hover:text-black disabled:opacity-0 transition-all">
                     <i data-lucide="chevron-left" class="w-8 h-8"></i>
                 </button>
-                <div id="counter" class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.3em]">0 / 0</div>
+                <div id="counter" class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] md:tracking-[0.3em]">0 / 0</div>
                 <button onclick="nextSlide()" id="next-btn" class="p-2 text-gray-300 hover:text-black disabled:opacity-0 transition-all">
                     <i data-lucide="chevron-right" class="w-8 h-8"></i>
                 </button>
             </div>
             
-            <div class="flex items-center gap-3 md:gap-6 pointer-events-auto">
+            <div class="flex items-center gap-2 md:gap-6 pointer-events-auto">
                 <button onclick="skipToSummary()" id="summary-btn" class="p-2 text-gray-300 hover:text-black transition-colors" title="View Summary">
                     <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
                 </button>
@@ -121,7 +127,7 @@
         </div>
 
         <!-- Swipe Hint -->
-        <div id="swipe-hint" class="hidden fixed bottom-32 animate-pulse text-gray-200 pointer-events-none flex flex-col items-center gap-1">
+        <div id="swipe-hint" class="hidden fixed bottom-24 md:bottom-32 animate-pulse text-gray-200 pointer-events-none flex flex-col items-center gap-1">
             <i data-lucide="move-right" class="w-5 h-5"></i>
             <span class="text-[8px] uppercase tracking-widest">Swipe any direction</span>
         </div>
@@ -217,7 +223,7 @@
                         <div class="logo-container">
                             <span class="logo-cite">Cite</span><span class="logo-case">Case</span>
                         </div>
-                        <p class="mt-8 text-gray-500 font-semibold tracking-[0.2em] uppercase text-xs md:text-sm">
+                        <p class="mt-8 text-gray-500 font-semibold tracking-[0.2em] uppercase text-xs md:text-sm px-4">
                             ${totalCount} Supreme Court Judgments Of 2026
                         </p>
                     `;
@@ -227,21 +233,35 @@
                     const totalCases = slides.length - 2;
                     const readCount = Object.values(readStatus).filter(v => v).length;
                     contentEl.innerHTML = `
-                        <h2 class="text-3xl md:text-5xl font-extrabold mb-8">Reading Summary</h2>
-                        <div class="flex flex-col items-center gap-6">
+                        <div class="mb-12">
+                            <div class="logo-container !text-4xl md:!text-6xl">
+                                <span class="logo-cite">Cite</span><span class="logo-case">Case.in</span>
+                            </div>
+                        </div>
+                        
+                        <h2 class="text-3xl md:text-5xl font-extrabold mb-8 px-4">Reading Summary</h2>
+                        <div class="flex flex-col items-center gap-6 px-4">
                             <div class="text-6xl md:text-8xl font-black text-black leading-none">${readCount} / ${totalCases}</div>
                             <div class="space-y-2 px-4">
-                                <p class="text-xl md:text-2xl text-gray-700 font-medium">You have read ${readCount}/${totalCases} judgments in this.</p>
+                                <p class="text-xl md:text-2xl text-gray-700 font-medium">You have read ${readCount}/${totalCases} judgments.</p>
                                 <p class="text-blue-600 text-lg font-bold tracking-widest uppercase">Keep it up!</p>
                             </div>
                         </div>
-                        <div class="flex flex-col sm:flex-row gap-4 mt-12 w-full max-w-xs sm:max-w-none justify-center px-4">
-                            <button onclick="resetProgress()" class="px-10 py-4 border-2 border-black text-black rounded-full font-bold hover:bg-gray-50 transition-all text-center">
-                                Reset Progress
-                            </button>
-                            <button onclick="currentIndex=0;renderSlide();" class="px-10 py-4 bg-black text-white rounded-full font-bold hover:scale-105 transition-all shadow-lg text-center">
+
+                        <div class="flex flex-col sm:flex-row gap-4 mt-12 w-full max-w-md justify-center px-6 pointer-events-auto">
+                            <button onclick="currentIndex=0;renderSlide();" class="flex-1 px-8 py-4 bg-black text-white rounded-full font-bold hover:scale-105 transition-all shadow-lg text-center">
                                 Back to Start
                             </button>
+                            <button onclick="resetProgress()" class="flex-1 px-8 py-4 border-2 border-black text-black rounded-full font-bold hover:bg-gray-50 transition-all text-center">
+                                Reset
+                            </button>
+                        </div>
+                        
+                        <div class="mt-10 pointer-events-auto">
+                            <a href="https://citecase.in/register" target="_blank" rel="noopener noreferrer" 
+                               class="btn-action inline-flex items-center gap-2 px-10 py-4 bg-blue-600 text-white rounded-full font-bold text-lg hover:bg-blue-700 shadow-md">
+                               Subscribe <i data-lucide="bell" class="w-5 h-5"></i>
+                            </a>
                         </div>
                     `;
                     hintEl.classList.add('hidden');
@@ -249,20 +269,20 @@
                 } else {
                     const isRead = readStatus[currentIndex];
                     contentEl.innerHTML = `
-                        <h2 class="text-3xl md:text-5xl font-extrabold leading-tight tracking-tight text-black max-w-4xl mx-auto px-4 mb-10">
+                        <h2 class="text-2xl md:text-5xl font-extrabold leading-tight tracking-tight text-black max-w-4xl mx-auto px-4 mb-10 overflow-hidden">
                             ${slide.title}
                         </h2>
                         
-                        <div class="flex flex-wrap justify-center gap-4 pointer-events-auto px-4">
+                        <div class="flex flex-col sm:flex-row justify-center gap-4 pointer-events-auto w-full max-w-md md:max-w-none px-6">
                             <a href="${slide.url}" target="_blank" rel="noopener noreferrer" 
-                               class="btn-action flex-1 sm:flex-none inline-flex justify-center items-center gap-2 px-8 py-4 bg-black text-white rounded-full font-bold text-lg hover:bg-gray-800 shadow-md">
-                               Read Case <i data-lucide="external-link" class="w-5 h-5"></i>
+                               class="btn-action btn-text inline-flex justify-center items-center gap-2 px-6 md:px-8 py-4 bg-black text-white rounded-full font-bold text-lg hover:bg-gray-800 shadow-md">
+                               Read Judgment <i data-lucide="external-link" class="w-5 h-5"></i>
                             </a>
                             
                             <button onclick="toggleRead(${currentIndex})" 
-                                    class="btn-action flex-1 sm:flex-none inline-flex justify-center items-center gap-2 px-8 py-4 border-2 ${isRead ? 'checked-read' : 'border-black'} rounded-full font-bold text-lg shadow-sm">
+                                    class="btn-action btn-text inline-flex justify-center items-center gap-2 px-6 md:px-8 py-4 border-2 ${isRead ? 'checked-read' : 'border-black'} rounded-full font-bold text-lg shadow-sm">
                                 <i data-lucide="${isRead ? 'check-circle' : 'circle'}" class="w-5 h-5"></i>
-                                ${isRead ? 'Read Already' : 'Mark as Read'}
+                                ${isRead ? 'Read Already' : 'Read This?'}
                             </button>
                         </div>
                     `;
@@ -347,13 +367,10 @@
 
             if (e.target.closest('button') || e.target.closest('a')) return;
 
-            // Determine if horizontal or vertical displacement is greater
             if (Math.abs(deltaX) > Math.abs(deltaY)) {
-                // Horizontal swipes
                 if (deltaX > threshold) nextSlide();
                 else if (deltaX < -threshold) prevSlide();
             } else {
-                // Vertical swipes
                 if (deltaY > threshold) nextSlide();
                 else if (deltaY < -threshold) prevSlide();
             }
