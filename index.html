@@ -91,6 +91,12 @@
             padding-bottom: 80px;
         }
 
+        .modal-overlay {
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px);
+            transition: opacity 0.3s ease;
+        }
+
         @media (max-width: 480px) {
             .logo-container { font-size: 2.2rem; }
             h2 { font-size: 1.5rem !important; line-height: 1.25 !important; }
@@ -139,12 +145,61 @@
                 <button onclick="skipToSummary()" id="summary-btn" class="p-2 text-gray-400 hover:text-black transition-colors" title="View Summary">
                     <i data-lucide="bar-chart-3" class="w-5 h-5 md:w-6 md:h-6"></i>
                 </button>
-                <button onclick="shareCase()" class="p-2 text-gray-400 hover:text-black transition-colors">
+                <button onclick="toggleBookmarkCurrent()" id="bookmark-footer-btn" class="p-2 text-gray-400 hover:text-black transition-colors">
+                    <i data-lucide="bookmark" class="w-5 h-5 md:w-6 md:h-6"></i>
+                </button>
+                <button onclick="openShareModal()" class="p-2 text-gray-400 hover:text-black transition-colors">
                     <i data-lucide="share" class="w-5 h-5 md:w-6 md:h-6"></i>
                 </button>
                 <button onclick="resetApp()" class="p-2 text-gray-400 hover:text-black transition-colors">
                     <i data-lucide="home" class="w-5 h-5 md:w-6 md:h-6"></i>
                 </button>
+            </div>
+        </div>
+
+        <!-- Share Modal -->
+        <div id="share-modal" class="hidden fixed inset-0 z-[100] modal-overlay flex items-center justify-center p-4">
+            <div class="bg-white border border-gray-100 rounded-[2.5rem] shadow-2xl w-full max-w-sm p-8 flex flex-col items-center">
+                <h3 class="text-xl font-bold mb-8 text-black">Share Judgment</h3>
+                <div class="grid grid-cols-3 gap-y-8 gap-x-4 w-full mb-8">
+                    <button onclick="shareToX()" class="flex flex-col items-center gap-2 group">
+                        <div class="w-12 h-12 bg-black rounded-2xl flex items-center justify-center text-white group-active:scale-95 transition-transform">
+                            <svg viewBox="0 0 24 24" class="w-5 h-5 fill-current"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+                        </div>
+                        <span class="text-[9px] font-bold uppercase tracking-widest text-gray-400">X</span>
+                    </button>
+                    <button onclick="shareToWhatsApp()" class="flex flex-col items-center gap-2 group">
+                        <div class="w-12 h-12 bg-[#25D366] rounded-2xl flex items-center justify-center text-white group-active:scale-95 transition-transform">
+                            <i data-lucide="message-circle" class="w-6 h-6"></i>
+                        </div>
+                        <span class="text-[9px] font-bold uppercase tracking-widest text-gray-400">WhatsApp</span>
+                    </button>
+                    <button onclick="shareToTelegram()" class="flex flex-col items-center gap-2 group">
+                        <div class="w-12 h-12 bg-[#0088cc] rounded-2xl flex items-center justify-center text-white group-active:scale-95 transition-transform">
+                            <i data-lucide="send" class="w-6 h-6"></i>
+                        </div>
+                        <span class="text-[9px] font-bold uppercase tracking-widest text-gray-400">Telegram</span>
+                    </button>
+                    <button onclick="shareToLinkedIn()" class="flex flex-col items-center gap-2 group">
+                        <div class="w-12 h-12 bg-[#0077b5] rounded-2xl flex items-center justify-center text-white group-active:scale-95 transition-transform">
+                            <i data-lucide="linkedin" class="w-6 h-6"></i>
+                        </div>
+                        <span class="text-[9px] font-bold uppercase tracking-widest text-gray-400">LinkedIn</span>
+                    </button>
+                    <button onclick="shareToFacebook()" class="flex flex-col items-center gap-2 group">
+                        <div class="w-12 h-12 bg-[#1877F2] rounded-2xl flex items-center justify-center text-white group-active:scale-95 transition-transform">
+                            <i data-lucide="facebook" class="w-6 h-6"></i>
+                        </div>
+                        <span class="text-[9px] font-bold uppercase tracking-widest text-gray-400">Facebook</span>
+                    </button>
+                    <button onclick="copyCurrentLink()" class="flex flex-col items-center gap-2 group">
+                        <div class="w-12 h-12 bg-gray-100 rounded-2xl flex items-center justify-center text-gray-600 group-active:scale-95 transition-transform">
+                            <i data-lucide="link" class="w-6 h-6"></i>
+                        </div>
+                        <span class="text-[9px] font-bold uppercase tracking-widest text-gray-400">Link</span>
+                    </button>
+                </div>
+                <button onclick="closeShareModal()" class="w-full py-4 bg-gray-50 rounded-2xl font-bold text-gray-500 active:bg-gray-100 transition-colors">Close</button>
             </div>
         </div>
 
@@ -156,8 +211,13 @@
     </div>
 
     <script>
-        const DATA_URL = 'https://raw.githubusercontent.com/citecase/I/refs/heads/main/list.md';
-        const STORAGE_KEY = 'citecase_2026_read_status';
+        // Only fetching from daily.md as requested
+        const SOURCES = [
+            'https://raw.githubusercontent.com/citecase/I/refs/heads/main/daily.md'
+        ];
+        const STATUS_KEY = 'citecase_2026_read_status';
+        const BOOKMARK_KEY = 'citecase_2026_bookmarks';
+        
         let allCaseData = []; 
         let slides = [];      
         let currentIndex = 0;
@@ -166,29 +226,39 @@
         let touchStartY = 0;
         let touchEndY = 0;
         let readStatus = {};
+        let bookmarks = {};
         let activeFilter = 'All';
 
-        const filterOptions = ['All', 'Arbitration', 'CPC', 'CrPC/BNSS', 'IPC', 'Evidence', 'SRA', 'TPA', 'IBC', 'Constitution'];
+        const filterOptions = ['All', 'Bookmarks', 'Arbitration', 'CPC', 'CrPC/BNSS', 'IPC', 'Evidence', 'SRA', 'TPA', 'IBC', 'Constitution'];
 
         async function init() {
             try {
-                const response = await fetch(DATA_URL);
-                const text = await response.text();
+                const responses = await Promise.all(SOURCES.map(url => fetch(url)));
+                const texts = await Promise.all(responses.map(res => res.text()));
                 
-                const lines = text.split(/\r?\n/);
-                allCaseData = [];
+                const mergedMap = new Map();
 
-                lines.forEach(line => {
-                    const match = line.match(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/);
-                    if (match) {
+                texts.forEach(text => {
+                    const regex = /\[(.*?)]\((https?:\/\/[^\s)]+)\)/g;
+                    let match;
+                    while ((match = regex.exec(text)) !== null) {
                         const cleanTitle = match[1].replace(/\\/g, '').trim();
-                        allCaseData.push({ title: cleanTitle, url: match[2] });
+                        const url = match[2];
+                        if (!mergedMap.has(url) || cleanTitle.length > mergedMap.get(url).length) {
+                            mergedMap.set(url, cleanTitle);
+                        }
                     }
                 });
 
-                const cached = localStorage.getItem(STORAGE_KEY);
-                if (cached) {
-                    try { readStatus = JSON.parse(cached); } catch(e) {}
+                allCaseData = Array.from(mergedMap.entries()).map(([url, title]) => ({ title, url }));
+
+                const cachedStatus = localStorage.getItem(STATUS_KEY);
+                if (cachedStatus) {
+                    try { readStatus = JSON.parse(cachedStatus); } catch(e) {}
+                }
+                const cachedBookmarks = localStorage.getItem(BOOKMARK_KEY);
+                if (cachedBookmarks) {
+                    try { bookmarks = JSON.parse(cachedBookmarks); } catch(e) {}
                 }
 
                 buildSlides();
@@ -200,14 +270,16 @@
                 renderSlide();
                 lucide.createIcons();
             } catch (error) {
-                console.error('Error:', error);
+                console.error('Error fetching data:', error);
                 document.getElementById('loading').innerHTML = `<p class="text-red-400">Connection error.</p>`;
             }
         }
 
         function buildSlides() {
             let filtered = allCaseData;
-            if (activeFilter !== 'All') {
+            if (activeFilter === 'Bookmarks') {
+                filtered = allCaseData.filter(c => bookmarks[c.title]);
+            } else if (activeFilter !== 'All') {
                 const keyword = activeFilter.toLowerCase();
                 if (activeFilter === 'CrPC/BNSS') {
                     filtered = allCaseData.filter(c => 
@@ -238,19 +310,18 @@
             renderSlide();
         }
 
-        function saveStatus() {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(readStatus));
-        }
-
         function toggleRead(index) {
             const caseTitle = slides[index].title;
             readStatus[caseTitle] = !readStatus[caseTitle];
-            saveStatus();
+            localStorage.setItem(STATUS_KEY, JSON.stringify(readStatus));
             renderSlide();
         }
 
-        function skipToSummary() {
-            currentIndex = slides.length - 1;
+        function toggleBookmarkCurrent() {
+            const slide = slides[currentIndex];
+            if (!slide || slide.isBranding || slide.isResults) return;
+            bookmarks[slide.title] = !bookmarks[slide.title];
+            localStorage.setItem(BOOKMARK_KEY, JSON.stringify(bookmarks));
             renderSlide();
         }
 
@@ -264,7 +335,13 @@
             const hintEl = document.getElementById('swipe-hint');
             const prevBtn = document.getElementById('prev-btn');
             const nextBtn = document.getElementById('next-btn');
-            const summaryBtn = document.getElementById('summary-btn');
+            const bookmarkFooterBtn = document.getElementById('bookmark-footer-btn');
+
+            bookmarkFooterBtn.classList.toggle('hidden', slide.isBranding || slide.isResults);
+            if (!slide.isBranding && !slide.isResults) {
+                const isBookmarked = bookmarks[slide.title];
+                bookmarkFooterBtn.innerHTML = `<i data-lucide="bookmark" class="w-5 h-5 md:w-6 md:h-6 ${isBookmarked ? 'fill-black' : ''}"></i>`;
+            }
 
             contentEl.style.opacity = '0';
 
@@ -291,18 +368,15 @@
                         </div>
                     `;
                     hintEl.classList.toggle('hidden', slides.length <= 1);
-                    summaryBtn.classList.remove('hidden');
                 } else if (slide.isResults) {
                     const totalCases = slides.length - 2;
                     const readCount = slides.slice(1, -1).filter(s => readStatus[s.title]).length;
-                    
                     contentEl.innerHTML = `
                         <div class="mb-6">
                             <div class="logo-container !text-3xl md:!text-5xl">
                                 <span class="logo-cite">Cite</span><span class="logo-case">Case.in</span>
                             </div>
                         </div>
-                        
                         <h2 class="text-xl md:text-3xl font-extrabold mb-4 px-4 text-black">Your Summary</h2>
                         <div class="flex flex-col items-center gap-4 px-4">
                             <div class="text-5xl md:text-7xl font-black text-black">${readCount} / ${totalCases}</div>
@@ -311,25 +385,15 @@
                                 <p class="text-blue-600 text-[10px] font-bold tracking-widest uppercase">Excellent work!</p>
                             </div>
                         </div>
-
                         <div class="flex gap-3 mt-8 w-full max-w-xs justify-center px-4 pointer-events-auto">
-                            <button onclick="currentIndex=0;renderSlide();" class="flex-1 px-4 py-3 bg-black text-white rounded-full font-bold text-xs shadow-md">
-                                Start Over
-                            </button>
-                            <button onclick="resetProgress()" class="px-4 py-3 border border-black text-black rounded-full font-bold text-xs">
-                                Reset
-                            </button>
+                            <button onclick="currentIndex=0;renderSlide();" class="flex-1 px-4 py-3 bg-black text-white rounded-full font-bold text-xs shadow-md">Start Over</button>
+                            <button onclick="resetProgress()" class="px-4 py-3 border border-black text-black rounded-full font-bold text-xs">Reset</button>
                         </div>
-                        
                         <div class="mt-6 pointer-events-auto">
-                            <a href="https://citecase.in/register" target="_blank" 
-                               class="btn-action inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-full font-bold text-xs shadow-md">
-                               Subscribe <i data-lucide="bell" class="w-4 h-4"></i>
-                            </a>
+                            <a href="https://citecase.in/register" target="_blank" class="btn-action inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-full font-bold text-xs shadow-md">Subscribe <i data-lucide="bell" class="w-4 h-4"></i></a>
                         </div>
                     `;
                     hintEl.classList.add('hidden');
-                    summaryBtn.classList.add('hidden');
                 } else {
                     const isRead = readStatus[slide.title];
                     contentEl.innerHTML = `
@@ -337,29 +401,20 @@
                         <h2 class="text-xl md:text-4xl font-extrabold leading-tight text-black max-w-3xl mx-auto px-4 mb-8">
                             ${slide.title}
                         </h2>
-                        
                         <div class="flex flex-col gap-3 pointer-events-auto w-full max-w-[280px] md:max-w-md">
-                            <a href="${slide.url}" target="_blank" 
-                               class="btn-action inline-flex justify-center items-center gap-2 px-6 py-4 bg-black text-white rounded-full font-bold text-sm shadow-md">
-                               Read Judgment <i data-lucide="external-link" class="w-4 h-4"></i>
-                            </a>
-                            
-                            <button onclick="toggleRead(${currentIndex})" 
-                                    class="btn-action inline-flex justify-center items-center gap-2 px-6 py-4 border-2 ${isRead ? 'checked-read' : 'border-black'} rounded-full font-bold text-sm">
+                            <a href="${slide.url}" target="_blank" class="btn-action inline-flex justify-center items-center gap-2 px-6 py-4 bg-black text-white rounded-full font-bold text-sm shadow-md">Read Judgment <i data-lucide="external-link" class="w-4 h-4"></i></a>
+                            <button onclick="toggleRead(${currentIndex})" class="btn-action inline-flex justify-center items-center gap-2 px-6 py-4 border-2 ${isRead ? 'checked-read' : 'border-black'} rounded-full font-bold text-sm">
                                 <i data-lucide="${isRead ? 'check-circle' : 'circle'}" class="w-4 h-4"></i>
                                 ${isRead ? 'Read Already' : 'Read This?'}
                             </button>
                         </div>
                     `;
                     hintEl.classList.add('hidden');
-                    summaryBtn.classList.remove('hidden');
                 }
                 
                 contentEl.style.opacity = '1';
-                
                 counterEl.innerText = `${currentIndex + 1} / ${slides.length}`;
                 progressEl.style.width = `${((currentIndex + 1) / slides.length) * 100}%`;
-                
                 prevBtn.disabled = currentIndex === 0;
                 nextBtn.disabled = currentIndex === slides.length - 1;
                 
@@ -367,84 +422,94 @@
             }, 50);
         }
 
-        function nextSlide() {
-            if (currentIndex < slides.length - 1) {
-                currentIndex++;
-                renderSlide();
-            }
-        }
-
-        function prevSlide() {
-            if (currentIndex > 0) {
-                currentIndex--;
-                renderSlide();
-            }
-        }
+        function nextSlide() { if (currentIndex < slides.length - 1) { currentIndex++; renderSlide(); } }
+        function prevSlide() { if (currentIndex > 0) { currentIndex--; renderSlide(); } }
+        function skipToSummary() { currentIndex = slides.length - 1; renderSlide(); }
+        function resetApp() { currentIndex = 0; activeFilter = 'All'; buildSlides(); renderSlide(); }
 
         function resetProgress() {
-            if (confirm("Clear all reading progress?")) {
-                readStatus = {};
-                localStorage.removeItem(STORAGE_KEY);
+            if (confirm("Clear all reading progress and bookmarks?")) {
+                readStatus = {}; bookmarks = {};
+                localStorage.removeItem(STATUS_KEY); localStorage.removeItem(BOOKMARK_KEY);
                 renderSlide();
             }
         }
 
-        function resetApp() {
-            currentIndex = 0;
-            activeFilter = 'All';
-            buildSlides();
-            renderSlide();
-        }
-
-        async function shareCase() {
+        function openShareModal() {
             const slide = slides[currentIndex];
             if (slide.isBranding || slide.isResults) return;
-            const text = `${slide.title} - CiteCase.in`;
-            const url = slide.url || window.location.href;
-            
-            if (navigator.share) {
-                try {
-                    await navigator.share({ title: 'CiteCase', text: text, url: url });
-                } catch (err) {
-                    if (err.name !== 'AbortError') console.error('Share failed:', err);
-                }
-            } else {
-                const el = document.createElement('textarea');
-                el.value = `${text} ${url}`;
-                document.body.appendChild(el);
-                el.select();
-                try { document.execCommand('copy'); } catch (err) {}
-                document.body.removeChild(el);
-            }
+            document.getElementById('share-modal').classList.remove('hidden');
+        }
+        function closeShareModal() { document.getElementById('share-modal').classList.add('hidden'); }
+
+        function shareToX() {
+            const slide = slides[currentIndex];
+            const text = encodeURIComponent(`${slide.title} ${slide.url} via @CiteCase`);
+            window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
+            closeShareModal();
+        }
+
+        function shareToWhatsApp() {
+            const slide = slides[currentIndex];
+            const text = encodeURIComponent(`*${slide.title}*\nRead Judgment here: ${slide.url}\nin CiteCase.in`);
+            window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+            closeShareModal();
+        }
+
+        function shareToTelegram() {
+            const slide = slides[currentIndex];
+            const text = encodeURIComponent(`${slide.title} in CiteCase.in`);
+            const url = encodeURIComponent(slide.url);
+            window.open(`https://t.me/share/url?url=${url}&text=${text}`, '_blank');
+            closeShareModal();
+        }
+
+        function shareToLinkedIn() {
+            const slide = slides[currentIndex];
+            const url = encodeURIComponent(slide.url);
+            window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank');
+            closeShareModal();
+        }
+
+        function shareToFacebook() {
+            const slide = slides[currentIndex];
+            const url = encodeURIComponent(slide.url);
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+            closeShareModal();
+        }
+
+        function copyCurrentLink() {
+            const slide = slides[currentIndex];
+            const text = `${slide.title} ${slide.url} in CiteCase.in`;
+            const el = document.createElement('textarea');
+            el.value = text;
+            document.body.appendChild(el);
+            el.select();
+            try { document.execCommand('copy'); } catch (err) {}
+            document.body.removeChild(el);
+            closeShareModal();
         }
 
         document.addEventListener('touchstart', e => {
-            touchStartX = e.changedTouches[0].screenX;
-            touchStartY = e.changedTouches[0].screenY;
+            touchStartX = e.changedTouches[0].screenX; touchStartY = e.changedTouches[0].screenY;
         }, {passive: true});
 
         document.addEventListener('touchend', e => {
-            touchEndX = e.changedTouches[0].screenX;
-            touchEndY = e.changedTouches[0].screenY;
-            
+            if (e.target.closest('button') || e.target.closest('a') || !document.getElementById('share-modal').classList.contains('hidden')) return;
+            touchEndX = e.changedTouches[0].screenX; touchEndY = e.changedTouches[0].screenY;
             const threshold = 40;
-            const deltaX = touchStartX - touchEndX;
-            const deltaY = touchStartY - touchEndY;
-
-            if (e.target.closest('button') || e.target.closest('a')) return;
-
+            const deltaX = touchStartX - touchEndX; const deltaY = touchStartY - touchEndY;
             if (Math.abs(deltaX) > Math.abs(deltaY)) {
-                if (deltaX > threshold) nextSlide();
-                else if (deltaX < -threshold) prevSlide();
+                if (deltaX > threshold) nextSlide(); else if (deltaX < -threshold) prevSlide();
             } else {
-                if (deltaY > threshold) nextSlide();
-                else if (deltaY < -threshold) prevSlide();
+                if (deltaY > threshold) nextSlide(); else if (deltaY < -threshold) prevSlide();
             }
         }, false);
 
         document.addEventListener('keydown', e => {
             if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') nextSlide();
             if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') prevSlide();
+            if (e.key === 'Escape') closeShareModal();
         });
 
         window.onload = init;
